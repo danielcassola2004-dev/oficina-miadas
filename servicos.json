@@ -1,0 +1,68 @@
+[
+{
+  "model": "core.servico",
+  "pk": 4,
+  "fields": {
+    "nome": "BATE-CHAPA ",
+    "descricao": "Restauração completa da carroceria, reparando amassados, riscos e danos estruturais, além de pintura profissional que devolve o brilho e a aparência de carro novo",
+    "preco": "70000.00",
+    "imagem": "servicos/bate_chapa_QPlZlkD.png",
+    "ativo": true
+  }
+},
+{
+  "model": "core.servico",
+  "pk": 5,
+  "fields": {
+    "nome": "DIAGNÓSTICO COMPUTARIZADO",
+    "descricao": "Leitura precisa de códigos de erro, verificação de sensores e sistemas eletrônicos, utilizando equipamentos de ponta para identificar problemas antes que se tornem graves.",
+    "preco": "10000.00",
+    "imagem": "servicos/diagnostico.png",
+    "ativo": true
+  }
+},
+{
+  "model": "core.servico",
+  "pk": 6,
+  "fields": {
+    "nome": "MECÂNICA GERAL",
+    "descricao": "A Mecânica Geral é o coração de qualquer oficina de confiança. Na Oficina Miadas, oferecemos serviços abrangentes de manutenção e reparação de todos os sistemas mecânicos do seu veículo. Desde a substituição de óleos e filtros até reparações mais complexas de motores, caixas de velocidades e suspensão, a nossa equipa de técnicos certificados garante que o seu carro funciona com perfeição. Utilizamos peças de qualidade e as melhores práticas da indústria para assegurar a longevidade e o desempenho do seu veículo.\r\n",
+    "preco": "20000.00",
+    "imagem": "servicos/mecanica.png",
+    "ativo": true
+  }
+},
+{
+  "model": "core.servico",
+  "pk": 8,
+  "fields": {
+    "nome": "Ar condicionado.",
+    "descricao": "O conforto dentro do veículo é essencial, especialmente em dias de calor intenso. Na Oficina Miadas, oferecemos serviços especializados de Ar Condicionado Auto, incluindo diagnóstico, recarga de gás refrigerante, deteção e reparação de fugas, limpeza de componentes e substituição de peças danificadas. Utilizamos equipamentos modernos para garantir que o sistema funcione com máxima eficiência, proporcionando um ambiente agradável, seguro e saudável para todos os ocupantes do veículo.",
+    "preco": "20000.00",
+    "imagem": "servicos/ChatGPT_Image_16_06_2026_21_28_24_1.png",
+    "ativo": true
+  }
+},
+{
+  "model": "core.servico",
+  "pk": 9,
+  "fields": {
+    "nome": "PINTURA",
+    "descricao": "A Mecânica Geral é o coração de qualquer oficina de confiança. Na Oficina Miadas, oferecemos serviços abrangentes de manutenção e reparação de todos os sistemas mecânicos do seu veículo. Desde a substituição de óleos e filtros até reparações mais complexas de motores, caixas de velocidades e suspensão, a nossa equipa de técnicos certificados garante que o seu carro funciona com perfeição. Utilizamos peças de qualidade e as melhores práticas da indústria para assegurar a longevidade e o desempenho do seu veículo.\r\n",
+    "preco": "20000.00",
+    "imagem": "servicos/pintura_81JpnOS.png",
+    "ativo": true
+  }
+},
+{
+  "model": "core.servico",
+  "pk": 10,
+  "fields": {
+    "nome": "Eletrecidade Auto",
+    "descricao": "Os sistemas elétricos são essenciais para o funcionamento seguro do seu veículo. O serviço de Eletricidade Auto da Oficina Miadas cobre desde a manutenção básica de bateria até reparações complexas de sistemas elétricos. Os nossos técnicos utilizam equipamento de diagnóstico de última geração para identificar e resolver problemas de forma rápida e eficiente. Oferecemos soluções para alternadores, motores de arranque, sistemas de iluminação e toda a fiação elétrica do seu carro.",
+    "preco": "78.00",
+    "imagem": "servicos/manutenção.png",
+    "ativo": true
+  }
+}
+]

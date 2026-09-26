@@ -4,7 +4,7 @@
   "pk": 4,
   "fields": {
     "nome": "BATE-CHAPA ",
-    "descricao": "Restauração completa da carroceria, reparando amassados, riscos e danos estruturais, além de pintura profissional que devolve o brilho e a aparência de carro novo",
+    "descricao": "RestauraÃ§Ã£o completa da carroceria, reparando amassados, riscos e danos estruturais, alÃ©m de pintura profissional que devolve o brilho e a aparÃªncia de carro novo",
     "preco": "70000.00",
     "imagem": "servicos/bate_chapa_QPlZlkD.png",
     "ativo": true
@@ -14,8 +14,8 @@
   "model": "core.servico",
   "pk": 5,
   "fields": {
-    "nome": "DIAGNÓSTICO COMPUTARIZADO",
-    "descricao": "Leitura precisa de códigos de erro, verificação de sensores e sistemas eletrônicos, utilizando equipamentos de ponta para identificar problemas antes que se tornem graves.",
+    "nome": "DIAGNÃ“STICO COMPUTARIZADO",
+    "descricao": "Leitura precisa de cÃ³digos de erro, verificaÃ§Ã£o de sensores e sistemas eletrÃ´nicos, utilizando equipamentos de ponta para identificar problemas antes que se tornem graves.",
     "preco": "10000.00",
     "imagem": "servicos/diagnostico.png",
     "ativo": true
@@ -25,8 +25,8 @@
   "model": "core.servico",
   "pk": 6,
   "fields": {
-    "nome": "MECÂNICA GERAL",
-    "descricao": "A Mecânica Geral é o coração de qualquer oficina de confiança. Na Oficina Miadas, oferecemos serviços abrangentes de manutenção e reparação de todos os sistemas mecânicos do seu veículo. Desde a substituição de óleos e filtros até reparações mais complexas de motores, caixas de velocidades e suspensão, a nossa equipa de técnicos certificados garante que o seu carro funciona com perfeição. Utilizamos peças de qualidade e as melhores práticas da indústria para assegurar a longevidade e o desempenho do seu veículo.\r\n",
+    "nome": "MECÃ‚NICA GERAL",
+    "descricao": "A MecÃ¢nica Geral Ã© o coraÃ§Ã£o de qualquer oficina de confianÃ§a. Na Oficina Miadas, oferecemos serviÃ§os abrangentes de manutenÃ§Ã£o e reparaÃ§Ã£o de todos os sistemas mecÃ¢nicos do seu veÃ­culo. Desde a substituiÃ§Ã£o de Ã³leos e filtros atÃ© reparaÃ§Ãµes mais complexas de motores, caixas de velocidades e suspensÃ£o, a nossa equipa de tÃ©cnicos certificados garante que o seu carro funciona com perfeiÃ§Ã£o. Utilizamos peÃ§as de qualidade e as melhores prÃ¡ticas da indÃºstria para assegurar a longevidade e o desempenho do seu veÃ­culo.\r\n",
     "preco": "20000.00",
     "imagem": "servicos/mecanica.png",
     "ativo": true
@@ -37,7 +37,7 @@
   "pk": 8,
   "fields": {
     "nome": "Ar condicionado.",
-    "descricao": "O conforto dentro do veículo é essencial, especialmente em dias de calor intenso. Na Oficina Miadas, oferecemos serviços especializados de Ar Condicionado Auto, incluindo diagnóstico, recarga de gás refrigerante, deteção e reparação de fugas, limpeza de componentes e substituição de peças danificadas. Utilizamos equipamentos modernos para garantir que o sistema funcione com máxima eficiência, proporcionando um ambiente agradável, seguro e saudável para todos os ocupantes do veículo.",
+    "descricao": "O conforto dentro do veÃ­culo Ã© essencial, especialmente em dias de calor intenso. Na Oficina Miadas, oferecemos serviÃ§os especializados de Ar Condicionado Auto, incluindo diagnÃ³stico, recarga de gÃ¡s refrigerante, deteÃ§Ã£o e reparaÃ§Ã£o de fugas, limpeza de componentes e substituiÃ§Ã£o de peÃ§as danificadas. Utilizamos equipamentos modernos para garantir que o sistema funcione com mÃ¡xima eficiÃªncia, proporcionando um ambiente agradÃ¡vel, seguro e saudÃ¡vel para todos os ocupantes do veÃ­culo.",
     "preco": "20000.00",
     "imagem": "servicos/ChatGPT_Image_16_06_2026_21_28_24_1.png",
     "ativo": true
@@ -48,7 +48,7 @@
   "pk": 9,
   "fields": {
     "nome": "PINTURA",
-    "descricao": "A Mecânica Geral é o coração de qualquer oficina de confiança. Na Oficina Miadas, oferecemos serviços abrangentes de manutenção e reparação de todos os sistemas mecânicos do seu veículo. Desde a substituição de óleos e filtros até reparações mais complexas de motores, caixas de velocidades e suspensão, a nossa equipa de técnicos certificados garante que o seu carro funciona com perfeição. Utilizamos peças de qualidade e as melhores práticas da indústria para assegurar a longevidade e o desempenho do seu veículo.\r\n",
+    "descricao": "A MecÃ¢nica Geral Ã© o coraÃ§Ã£o de qualquer oficina de confianÃ§a. Na Oficina Miadas, oferecemos serviÃ§os abrangentes de manutenÃ§Ã£o e reparaÃ§Ã£o de todos os sistemas mecÃ¢nicos do seu veÃ­culo. Desde a substituiÃ§Ã£o de Ã³leos e filtros atÃ© reparaÃ§Ãµes mais complexas de motores, caixas de velocidades e suspensÃ£o, a nossa equipa de tÃ©cnicos certificados garante que o seu carro funciona com perfeiÃ§Ã£o. Utilizamos peÃ§as de qualidade e as melhores prÃ¡ticas da indÃºstria para assegurar a longevidade e o desempenho do seu veÃ­culo.\r\n",
     "preco": "20000.00",
     "imagem": "servicos/pintura_81JpnOS.png",
     "ativo": true
@@ -59,9 +59,9 @@
   "pk": 10,
   "fields": {
     "nome": "Eletrecidade Auto",
-    "descricao": "Os sistemas elétricos são essenciais para o funcionamento seguro do seu veículo. O serviço de Eletricidade Auto da Oficina Miadas cobre desde a manutenção básica de bateria até reparações complexas de sistemas elétricos. Os nossos técnicos utilizam equipamento de diagnóstico de última geração para identificar e resolver problemas de forma rápida e eficiente. Oferecemos soluções para alternadores, motores de arranque, sistemas de iluminação e toda a fiação elétrica do seu carro.",
+    "descricao": "Os sistemas elÃ©tricos sÃ£o essenciais para o funcionamento seguro do seu veÃ­culo. O serviÃ§o de Eletricidade Auto da Oficina Miadas cobre desde a manutenÃ§Ã£o bÃ¡sica de bateria atÃ© reparaÃ§Ãµes complexas de sistemas elÃ©tricos. Os nossos tÃ©cnicos utilizam equipamento de diagnÃ³stico de Ãºltima geraÃ§Ã£o para identificar e resolver problemas de forma rÃ¡pida e eficiente. Oferecemos soluÃ§Ãµes para alternadores, motores de arranque, sistemas de iluminaÃ§Ã£o e toda a fiaÃ§Ã£o elÃ©trica do seu carro.",
     "preco": "78.00",
-    "imagem": "servicos/manutenção.png",
+    "imagem": "servicos/manutenÃ§Ã£o.png",
     "ativo": true
   }
 }

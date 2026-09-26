@@ -1,0 +1,73 @@
+{% extends 'admin/base_admin.html' %}
+{% load static %}
+
+{% block title %}Gestão de Serviços - Oficina Miadas{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/admin_servicos.css' %}">
+{% endblock %}
+
+{% block content %}
+<div class="servicos-container">
+    <!-- HEADER -->
+    <div class="page-header">
+        <div>
+            <h1>Gestão de Serviços</h1>
+            <p class="subtitle">Crie, edite e gerencie os serviços oferecidos</p>
+        </div>
+        <a href="{% url 'criar_servico' %}" class="btn btn-primary">
+            <i class="fas fa-plus"></i> Novo Serviço
+        </a>
+    </div>
+
+    <!-- SERVICES GRID -->
+    <div class="services-grid">
+        {% if servicos %}
+            {% for servico in servicos %}
+            <div class="service-card">
+                <div class="service-image">
+                    {% if servico.imagem %}
+                        <img src="{{ servico.imagem.url }}" alt="{{ servico.nome }}">
+                    {% else %}
+                        <div class="image-placeholder">
+                            <i class="fas fa-tools"></i>
+                        </div>
+                    {% endif %}
+                </div>
+                <div class="service-content">
+                    <h3>{{ servico.nome }}</h3>
+                    <p class="description">{{ servico.descricao|truncatewords:15 }}</p>
+                    <div class="service-footer">
+                        <span class="price">{{ servico.preco }} Kz</span>
+                        <span class="status {% if servico.ativo %}active{% else %}inactive{% endif %}">
+                            {% if servico.ativo %}Ativo{% else %}Inativo{% endif %}
+                        </span>
+                    </div>
+                </div>
+                <div class="service-actions">
+                    <a href="{% url 'editar_servico' servico.id %}" class="btn-icon">
+                        <i class="fas fa-edit"></i>
+                    </a>
+                    <form method="post" action="{% url 'deletar_servico' servico.id %}" style="display:inline;" onsubmit="return confirm('Tem a certeza que deseja eliminar este serviço?')">
+                        {% csrf_token %}
+                        <button type="submit" class="btn-icon danger" title="Eliminar serviço">
+                            <i class="fas fa-trash"></i>
+                        </button>
+                    </form>
+                </div>
+            </div>
+            {% endfor %}
+        {% else %}
+        <div class="empty-state">
+            <i class="fas fa-tools"></i>
+            <p>Nenhum serviço cadastrado</p>
+            <a href="{% url 'criar_servico' %}" class="btn btn-primary">Criar Primeiro Serviço</a>
+        </div>
+        {% endif %}
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script src="{% static 'js/admin_servicos.js' %}"></script>
+{% endblock %}

@@ -1,0 +1,759 @@
+/* ============================================================
+   ARQUIVO: base_admin.css
+   DESCRIÇÃO: Estilos para o painel administrativo
+   IDIOMA: Português
+   TEMA: Claro e Escuro (Totalmente Funcional)
+   ============================================================ */
+
+/* ============================================================
+   SEÇÃO 1: VARIÁVEIS CSS E CORES
+   ============================================================ */
+
+:root {
+    /* CORES PRINCIPAIS */
+    --cor-primaria: #ff6b00;
+    --cor-secundaria: #1a1a1a;
+    
+    /* CORES TEMA CLARO (PADRÃO) */
+    --cor-fundo-claro: #ffffff;
+    --cor-texto-claro: #333333;
+    --cor-borda-claro: #e0e0e0;
+    --cor-fundo-secundario-claro: #f5f5f5;
+    
+    /* CORES TEMA ESCURO */
+    --cor-fundo-escuro: #1a1a1a;
+    --cor-texto-escuro: #ffffff;
+    --cor-borda-escuro: #333333;
+    --cor-fundo-secundario-escuro: #2a2a2a;
+    
+    /* CORES DE STATUS */
+    --cor-sucesso: #4caf50;
+    --cor-erro: #f44336;
+    --cor-aviso: #ff9800;
+    --cor-info: #2196f3;
+    
+    /* SOMBRAS */
+    --sombra-leve: 0 2px 4px rgba(0, 0, 0, 0.1);
+    --sombra-media: 0 4px 8px rgba(0, 0, 0, 0.15);
+    --sombra-forte: 0 8px 16px rgba(0, 0, 0, 0.2);
+    
+    /* ESPAÇAMENTOS */
+    --espacamento-xs: 4px;
+    --espacamento-sm: 8px;
+    --espacamento-md: 16px;
+    --espacamento-lg: 24px;
+    --espacamento-xl: 32px;
+    
+    /* RAIOS DE BORDA */
+    --raio-pequeno: 4px;
+    --raio-medio: 8px;
+    --raio-grande: 12px;
+    
+    /* TRANSIÇÕES */
+    --transicao-rapida: 0.2s ease;
+    --transicao-media: 0.3s ease;
+    --transicao-lenta: 0.5s ease;
+}
+
+/* ============================================================
+   SEÇÃO 2: TEMA CLARO (PADRÃO)
+   ============================================================ */
+
+body[data-tema="claro"],
+body {
+    /* CORES APLICADAS */
+    --fundo: var(--cor-fundo-claro);
+    --texto: var(--cor-texto-claro);
+    --borda: var(--cor-borda-claro);
+    --fundo-secundario: var(--cor-fundo-secundario-claro);
+}
+
+/* ============================================================
+   SEÇÃO 3: TEMA ESCURO
+   ============================================================ */
+
+body[data-tema="escuro"] {
+    /* CORES APLICADAS */
+    --fundo: var(--cor-fundo-escuro);
+    --texto: var(--cor-texto-escuro);
+    --borda: var(--cor-borda-escuro);
+    --fundo-secundario: var(--cor-fundo-secundario-escuro);
+}
+
+/* ============================================================
+   SEÇÃO 4: ESTILOS GLOBAIS
+   ============================================================ */
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html, body {
+    height: 100%;
+    font-family: 'Inter', sans-serif;
+    background-color: var(--fundo);
+    color: var(--texto);
+    transition: background-color var(--transicao-media), color var(--transicao-media);
+}
+
+/* SCROLLBAR PERSONALIZADA */
+::-webkit-scrollbar {
+    width: 8px;
+}
+
+::-webkit-scrollbar-track {
+    background: var(--fundo-secundario);
+}
+
+::-webkit-scrollbar-thumb {
+    background: var(--borda);
+    border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: var(--cor-primaria);
+}
+
+/* ============================================================
+   SEÇÃO 5: LAYOUT PRINCIPAL
+   ============================================================ */
+
+body {
+    display: flex;
+    flex-direction: row;
+}
+
+/* BARRA LATERAL */
+.barra-lateral {
+    width: 250px;
+    background-color: var(--fundo-secundario);
+    border-right: 1px solid var(--borda);
+    overflow-y: auto;
+    position: fixed;
+    height: 100vh;
+    left: 0;
+    top: 0;
+    z-index: 1000;
+    transition: width var(--transicao-media);
+}
+
+/* CONTEÚDO PRINCIPAL */
+.conteudo-principal {
+    margin-left: 250px;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+    transition: margin-left var(--transicao-media);
+}
+
+/* ============================================================
+   SEÇÃO 6: BARRA LATERAL - CABEÇALHO
+   ============================================================ */
+
+.cabecalho-barra-lateral {
+    padding: var(--espacamento-lg);
+    border-bottom: 1px solid var(--borda);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.container-logo {
+    display: flex;
+    align-items: center;
+    gap: var(--espacamento-md);
+    cursor: pointer;
+}
+
+.container-logo img {
+    background-color:white;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    border: orage solid 5px;
+}
+
+.texto-logo h1 {
+    font-size: 18px;
+    font-weight: 700;
+    color: var(--cor-primaria);
+}
+
+.texto-logo p {
+    font-size: 12px;
+    color: var(--texto);
+    opacity: 0.7;
+}
+
+.botao-toggle-barra {
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-size: 20px;
+    color: var(--texto);
+    transition: color var(--transicao-rapida);
+}
+
+.botao-toggle-barra:hover {
+    color: var(--cor-primaria);
+}
+
+/* ============================================================
+   SEÇÃO 7: BARRA LATERAL - PERFIL
+   ============================================================ */
+
+.perfil-barra-lateral {
+    padding: var(--espacamento-lg);
+    border-bottom: 1px solid var(--borda);
+    display: flex;
+    align-items: center;
+    gap: var(--espacamento-md);
+}
+
+.avatar-perfil {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background-color: var(--cor-primaria);
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 700;
+    font-size: 14px;
+}
+
+.info-perfil h3 {
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--texto);
+}
+
+.info-perfil p {
+    font-size: 12px;
+    color: var(--texto);
+    opacity: 0.7;
+}
+
+/* ============================================================
+   SEÇÃO 8: BARRA LATERAL - NAVEGAÇÃO
+   ============================================================ */
+
+.navegacao-barra-lateral ul {
+    list-style: none;
+    padding: var(--espacamento-md) 0;
+}
+
+.link-nav {
+    display: flex;
+    align-items: center;
+    gap: var(--espacamento-md);
+    padding: var(--espacamento-md) var(--espacamento-lg);
+    color: var(--texto);
+    text-decoration: none;
+    transition: all var(--transicao-rapida);
+    border-left: 3px solid transparent;
+}
+
+.link-nav:hover {
+    background-color: var(--fundo);
+    color: var(--cor-primaria);
+}
+
+.link-nav.ativo {
+    background-color: var(--fundo);
+    color: var(--cor-primaria);
+    border-left-color: var(--cor-primaria);
+    font-weight: 600;
+}
+
+.link-nav.sair {
+    color: var(--cor-erro);
+}
+
+.link-nav.sair:hover {
+    background-color: rgba(244, 67, 54, 0.1);
+}
+
+.secao-nav {
+    padding: var(--espacamento-lg) var(--espacamento-lg) var(--espacamento-sm);
+}
+
+.titulo-secao-nav {
+    font-size: 12px;
+    font-weight: 700;
+    text-transform: uppercase;
+    color: var(--texto);
+    opacity: 0.5;
+}
+
+/* ============================================================
+   SEÇÃO 9: BARRA SUPERIOR
+   ============================================================ */
+
+.barra-superior {
+    background-color: var(--fundo);
+    border-bottom: 1px solid var(--borda);
+    padding: var(--espacamento-md) var(--espacamento-lg);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    height: 70px;
+    box-shadow: var(--sombra-leve);
+    position: sticky;
+    top: 0;
+    z-index: 100;
+}
+
+.barra-superior-esquerda {
+    display: flex;
+    align-items: center;
+    gap: var(--espacamento-lg);
+}
+
+.botao-menu-toggle {
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-size: 20px;
+    color: var(--texto);
+    transition: color var(--transicao-rapida);
+    display: none;
+}
+
+.botao-menu-toggle:hover {
+    color: var(--cor-primaria);
+}
+
+.caixa-pesquisa {
+    display: flex;
+    align-items: center;
+    gap: var(--espacamento-sm);
+    background-color: var(--fundo-secundario);
+    padding: var(--espacamento-sm) var(--espacamento-md);
+    border-radius: var(--raio-medio);
+    border: 1px solid var(--borda);
+}
+
+.caixa-pesquisa input {
+    background: none;
+    border: none;
+    outline: none;
+    color: var(--texto);
+    width: 200px;
+    font-size: 14px;
+}
+
+.caixa-pesquisa input::placeholder {
+    color: var(--texto);
+    opacity: 0.5;
+}
+
+.barra-superior-direita {
+    display: flex;
+    align-items: center;
+    gap: var(--espacamento-lg);
+}
+
+/* ============================================================
+   SEÇÃO 10: BOTÕES E CONTROLES
+   ============================================================ */
+
+.botao-alternar-tema,
+.botao-notificacoes,
+.botao-emails,
+.botao-utilizador {
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-size: 20px;
+    color: var(--texto);
+    transition: color var(--transicao-rapida);
+    position: relative;
+}
+
+.botao-alternar-tema:hover,
+.botao-notificacoes:hover,
+.botao-emails:hover,
+.botao-utilizador:hover {
+    color: var(--cor-primaria);
+}
+
+/* ============================================================
+   SEÇÃO 11: BADGES (CONTADORES)
+   ============================================================ */
+
+.badge-notificacoes,
+.badge-emails {
+    position: absolute;
+    top: -8px;
+    right: -8px;
+    background-color: var(--cor-erro);
+    color: white;
+    border-radius: 50%;
+    width: 20px;
+    height: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 12px;
+    font-weight: 700;
+}
+
+/* ============================================================
+   SEÇÃO 12: DROPDOWNS
+   ============================================================ */
+
+.dropdown-notificacoes,
+.dropdown-emails,
+.dropdown-utilizador {
+    position: absolute;
+    top: 100%;
+    right: 0;
+    background-color: var(--fundo);
+    border: 1px solid var(--borda);
+    border-radius: var(--raio-medio);
+    box-shadow: var(--sombra-media);
+    min-width: 300px;
+    max-height: 400px;
+    overflow-y: auto;
+    z-index: 1001;
+    margin-top: var(--espacamento-sm);
+}
+
+.cabecalho-dropdown {
+    padding: var(--espacamento-md);
+    border-bottom: 1px solid var(--borda);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.cabecalho-dropdown h3 {
+    font-size: 16px;
+    font-weight: 600;
+    color: var(--texto);
+}
+
+.botao-fechar {
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-size: 24px;
+    color: var(--texto);
+    transition: color var(--transicao-rapida);
+}
+
+.botao-fechar:hover {
+    color: var(--cor-erro);
+}
+
+/* ============================================================
+   SEÇÃO 13: ITENS DE NOTIFICAÇÃO E EMAIL
+   ============================================================ */
+
+.lista-notificacoes,
+.lista-emails {
+    padding: 0;
+}
+
+.item-notificacao,
+.item-email {
+    padding: var(--espacamento-md);
+    border-bottom: 1px solid var(--borda);
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: var(--espacamento-md);
+    transition: background-color var(--transicao-rapida);
+}
+
+.item-notificacao:hover,
+.item-email:hover {
+    background-color: var(--fundo-secundario);
+}
+
+.item-notificacao.nao-lida,
+.item-email.nao-lido {
+    background-color: rgba(255, 107, 0, 0.05);
+}
+
+.conteudo-notificacao,
+.conteudo-email {
+    flex: 1;
+}
+
+.conteudo-notificacao h4,
+.conteudo-email h4 {
+    font-size: 14px;
+    font-weight: 600;
+    margin-bottom: var(--espacamento-xs);
+    color: var(--texto);
+}
+
+.conteudo-notificacao p,
+.conteudo-email p {
+    font-size: 13px;
+    color: var(--texto);
+    opacity: 0.8;
+    margin-bottom: var(--espacamento-xs);
+}
+
+.conteudo-notificacao small,
+.conteudo-email small {
+    font-size: 12px;
+    color: var(--texto);
+    opacity: 0.6;
+}
+
+.botao-deletar {
+    background: none;
+    border: none;
+    cursor: pointer;
+    color: var(--cor-erro);
+    transition: color var(--transicao-rapida);
+    font-size: 14px;
+}
+
+.botao-deletar:hover {
+    color: var(--cor-erro);
+    opacity: 0.7;
+}
+
+.mensagem-vazia {
+    padding: var(--espacamento-lg);
+    text-align: center;
+    color: var(--texto);
+    opacity: 0.5;
+    font-size: 14px;
+}
+
+/* ============================================================
+   SEÇÃO 14: MENU DO UTILIZADOR
+   ============================================================ */
+
+.menu-utilizador {
+    position: relative;
+}
+
+.avatar-utilizador {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background-color: var(--cor-primaria);
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 700;
+    font-size: 14px;
+}
+
+.dropdown-utilizador {
+    min-width: 150px;
+}
+
+.item-dropdown {
+    display: flex;
+    align-items: center;
+    gap: var(--espacamento-md);
+    padding: var(--espacamento-md);
+    color: var(--texto);
+    text-decoration: none;
+    transition: all var(--transicao-rapida);
+}
+
+.item-dropdown:hover {
+    background-color: var(--fundo-secundario);
+    color: var(--cor-primaria);
+}
+
+.item-dropdown.sair {
+    color: var(--cor-erro);
+}
+
+.item-dropdown.sair:hover {
+    background-color: rgba(244, 67, 54, 0.1);
+}
+
+/* ============================================================
+   SEÇÃO 15: CONTEÚDO PRINCIPAL
+   ============================================================ */
+
+.conteudo {
+    flex: 1;
+    padding: var(--espacamento-lg);
+    overflow-y: auto;
+    color: var(--texto);
+}
+
+/* TÍTULOS */
+.conteudo h1,
+.conteudo h2,
+.conteudo h3,
+.conteudo h4,
+.conteudo h5,
+.conteudo h6 {
+    color: var(--texto);
+}
+
+/* PARÁGRAFOS */
+.conteudo p {
+    color: var(--texto);
+}
+
+/* TABELAS */
+.conteudo table {
+    background-color: var(--fundo);
+    color: var(--texto);
+    border-collapse: collapse;
+}
+
+.conteudo table th {
+    background-color: var(--fundo-secundario);
+    color: var(--texto);
+    border: 1px solid var(--borda);
+}
+
+.conteudo table td {
+    border: 1px solid var(--borda);
+    color: var(--texto);
+}
+
+.conteudo table tr:hover {
+    background-color: var(--fundo-secundario);
+}
+
+/* FORMULÁRIOS */
+.conteudo input,
+.conteudo textarea,
+.conteudo select {
+    background-color: var(--fundo-secundario);
+    color: var(--texto);
+    border: 1px solid var(--borda);
+}
+
+.conteudo input::placeholder,
+.conteudo textarea::placeholder {
+    color: var(--texto);
+    opacity: 0.5;
+}
+
+/* BOTÕES */
+.conteudo .btn,
+.conteudo button {
+    color: var(--texto);
+}
+
+/* ============================================================
+   SEÇÃO 16: ALERTAS
+   ============================================================ */
+
+.alerta {
+    padding: var(--espacamento-md);
+    border-radius: var(--raio-medio);
+    margin-bottom: var(--espacamento-md);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    animation: slideDown 0.3s ease;
+}
+
+@keyframes slideDown {
+    from {
+        opacity: 0;
+        transform: translateY(-20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.alerta-success {
+    background-color: rgba(76, 175, 80, 0.1);
+    color: var(--cor-sucesso);
+    border: 1px solid var(--cor-sucesso);
+}
+
+.alerta-error {
+    background-color: rgba(244, 67, 54, 0.1);
+    color: var(--cor-erro);
+    border: 1px solid var(--cor-erro);
+}
+
+.alerta-warning {
+    background-color: rgba(255, 152, 0, 0.1);
+    color: var(--cor-aviso);
+    border: 1px solid var(--cor-aviso);
+}
+
+.alerta-info {
+    background-color: rgba(33, 150, 243, 0.1);
+    color: var(--cor-info);
+    border: 1px solid var(--cor-info);
+}
+
+.botao-fechar-alerta {
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-size: 20px;
+    color: inherit;
+    transition: opacity var(--transicao-rapida);
+}
+
+.botao-fechar-alerta:hover {
+    opacity: 0.7;
+}
+
+/* ============================================================
+   SEÇÃO 17: RESPONSIVIDADE
+   ============================================================ */
+
+@media (max-width: 768px) {
+    /* BARRA LATERAL - OCULTAR EM MOBILE */
+    .barra-lateral {
+        transform: translateX(-100%);
+        transition: transform var(--transicao-media);
+    }
+    
+    .barra-lateral.aberta {
+        transform: translateX(0);
+    }
+    
+    /* CONTEÚDO PRINCIPAL - OCUPAR TELA INTEIRA */
+    .conteudo-principal {
+        margin-left: 0;
+    }
+    
+    /* MOSTRAR BOTÃO MENU */
+    .botao-menu-toggle {
+        display: block;
+    }
+    
+    /* CAIXA PESQUISA - MENOR */
+    .caixa-pesquisa input {
+        width: 150px;
+    }
+    
+    /* DROPDOWNS - AJUSTAR POSIÇÃO */
+    .dropdown-notificacoes,
+    .dropdown-emails,
+    .dropdown-utilizador {
+        min-width: 250px;
+    }
+}
+.avatar-perfil img{ 
+    height: 60px;
+    width: 60px;
+    border-radius: 15px;
+    background-color: white;
+}
+/* ============================================================
+   FIM DO ARQUIVO
+   ============================================================*/
+

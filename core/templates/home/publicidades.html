@@ -1,0 +1,46 @@
+{% extends 'home/base_cliente.html' %}
+{% load static %}
+
+{% block title %}Promoções - Oficina Miadas{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/publicidades.css' %}">
+{% endblock %}
+
+{% block content %}
+<div class="publicidades-wrapper">
+    <!-- HEADER -->
+    <div class="page-header">
+        <h1><i class="fas fa-star"></i> Promoções em Destaque</h1>
+        <p>Aproveite nossas melhores ofertas</p>
+    </div>
+
+    <!-- PUBLICIDADES GRID -->
+    {% if publicidades %}
+    <div class="publicidades-grid">
+        {% for pub in publicidades %}
+        <div class="publicidade-card">
+            <div class="pub-badge">
+                <i class="fas fa-star"></i> Destaque
+                 <img src="{{ pub.imagem.url }}" alt="{{ pub.titulo }}">
+            </div>
+            <h3>{{ pub.titulo }}</h3>
+            <p>{{ pub.descricao }}</p>
+            <a href="{% url 'agendar' %}" class="btn btn-primary">
+                Aproveitar Oferta
+            </a>
+        </div>
+        {% endfor %}
+    </div>
+    {% else %}
+    <div class="empty-state">
+        <i class="fas fa-inbox"></i>
+        <p>Nenhuma promoção disponível no momento</p>
+    </div>
+    {% endif %}
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script src="{% static 'js/publicidades.js' %}"></script>
+{% endblock %}

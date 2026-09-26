@@ -1,0 +1,140 @@
+{% extends 'home/base_cliente.html' %}
+{% load static %}
+
+{% block title %}Meus Agendamentos - Oficina Miadas{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/meus_agendamentos.css' %}">
+{% endblock %}
+
+{% block content %}
+<div class="agendamentos-wrapper">
+    <!-- HEADER -->
+    <div class="page-header">
+        <h1><i class="fas fa-calendar-alt"></i> Meus Agendamentos</h1>
+        <a href="{% url 'agendar' %}" class="btn btn-primary">
+            <i class="fas fa-plus"></i> Novo Agendamento
+        </a>
+    </div>
+
+    <!-- FILTROS -->
+    <div class="filters-section">
+        <div class="filter-group">
+            <label>Filtrar por Status:</label>
+            <div class="filter-buttons">
+                <a href="{% url 'meus_agendamentos' %}" class="filter-btn {% if not status_filter %}active{% endif %}">
+                    Todos
+                </a>
+                <a href="?status=pendente" class="filter-btn {% if status_filter == 'pendente' %}active{% endif %}">
+                    ⏳ Pendentes
+                </a>
+                <a href="?status=confirmado" class="filter-btn {% if status_filter == 'confirmado' %}active{% endif %}">
+                    ✅ Confirmados
+                </a>
+                <a href="?status=cancelado" class="filter-btn {% if status_filter == 'cancelado' %}active{% endif %}">
+                    ❌ Cancelados
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <!-- LISTA DE AGENDAMENTOS -->
+    {% if agendamentos %}
+    <div class="agendamentos-list">
+        {% for agendamento in agendamentos %}
+        <div class="agendamento-card" data-status="{{ agendamento.status_confirmacao }}">
+            <div class="card-header">
+                <div class="card-title">
+                    <h3>{{ agendamento.servico.nome }}</h3>
+                    <p class="card-date">
+                        <i class="fas fa-calendar"></i>
+                        {{ agendamento.data|date:"d \d\e M \d\e Y" }}
+                    </p>
+                </div>
+                <div class="status-badges">
+                    <span class="status-badge status-{{ agendamento.status_confirmacao }}">
+                        {% if agendamento.status_confirmacao == 'pendente' %}
+                            ⏳ {{ agendamento.get_status_confirmacao_display }}
+                        {% elif agendamento.status_confirmacao == 'confirmado' %}
+                            ✅ {{ agendamento.get_status_confirmacao_display }}
+                        {% elif agendamento.status_confirmacao == 'cancelado' %}
+                            ❌ {{ agendamento.get_status_confirmacao_display }}
+                        {% elif agendamento.status_confirmacao == 'nao_apareceu' %}
+                            🚫 {{ agendamento.get_status_confirmacao_display }}
+                        {% endif %}
+                    </span>
+                    <span class="status-badge status-pagamento-{{ agendamento.status_pagamento }}">
+                        {% if agendamento.status_pagamento == 'pago' %}
+                            💰 Pago
+                        {% else %}
+                            💳 Pagamento Pendente
+                        {% endif %}
+                    </span>
+                </div>
+            </div>
+
+            <div class="card-body">
+                <div class="info-row">
+                    <span class="label"><i class="fas fa-clock"></i> Hora:</span>
+                    <span class="value">{{ agendamento.hora }}</span>
+                </div>
+                <div class="info-row">
+                    <span class="label"><i class="fas fa-user"></i> Nome:</span>
+                    <span class="value">{{ agendamento.nome }}</span>
+                </div>
+                <div class="info-row">
+                    <span class="label"><i class="fas fa-envelope"></i> Email:</span>
+                    <span class="value">{{ agendamento.email }}</span>
+                </div>
+                <div class="info-row">
+                    <span class="label"><i class="fas fa-phone"></i> Telefone:</span>
+                    <span class="value">{{ agendamento.telefone }}</span>
+                </div>
+                {% if agendamento.observacoes %}
+                <div class="info-row">
+                    <span class="label"><i class="fas fa-sticky-note"></i> Observações:</span>
+                    <span class="value">{{ agendamento.observacoes }}</span>
+                </div>
+                {% endif %}
+            </div>
+
+            <div class="card-footer">
+                <small class="created-date">
+                    Criado em: {{ agendamento.criado_em|date:"d/m/Y H:i" }}
+                </small>
+                <div class="card-actions">
+                    <!-- Botão de Imprimir PDF -->
+                    <a href="{% url 'gerar_pdf_agendamento' agendamento.id %}" 
+                       class="btn btn-small btn-secondary" target="_blank">
+                        <i class="fas fa-file-pdf"></i> Imprimir PDF
+                    </a>
+
+                    {% if agendamento.status_confirmacao == 'pendente' or agendamento.status_confirmacao == 'confirmado' %}
+                    <form method="post" action="{% url 'cancelar_agendamento_cliente' agendamento.id %}" style="display:inline;" onsubmit="return confirm('Tem a certeza que deseja cancelar?')">
+                        {% csrf_token %}
+                        <button type="submit" class="btn btn-small btn-danger">
+                            <i class="fas fa-times"></i> Cancelar
+                        </button>
+                    </form>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+    {% else %}
+    <div class="empty-state">
+        <i class="fas fa-calendar-times"></i>
+        <h3>Nenhum agendamento</h3>
+        <p>Você ainda não tem agendamentos. Agende um serviço agora!</p>
+        <a href="{% url 'agendar' %}" class="btn btn-primary">
+            Agendar Agora
+        </a>
+    </div>
+    {% endif %}
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script src="{% static 'js/meus_agendamentos.js' %}"></script>
+{% endblock %}

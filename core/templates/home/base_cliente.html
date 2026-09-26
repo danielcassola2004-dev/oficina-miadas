@@ -1,0 +1,228 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="pt-PT">
+<head>
+    <!-- ============================================================ -->
+    <!-- META TAGS E CONFIGURAÇÕES -->
+    <!-- ============================================================ -->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Oficina Miadas - Área do Cliente{% endblock %}</title>
+    
+    <!-- FAVICON -->
+    
+    <!-- ============================================================ -->
+    <!-- FONTS E ÍCONES -->
+    <!-- ============================================================ -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    
+    <!-- ============================================================ -->
+    <!-- CSS BASE -->
+    <!-- ============================================================ -->
+    <link rel="stylesheet" href="{% static 'css/base_home.css' %}">
+    
+    {% block extra_css %}{% endblock %}
+</head>
+<body>
+    <!-- ============================================================ -->
+    <!-- SIDEBAR - MENU LATERAL -->
+    <!-- ============================================================ -->
+    <aside class="barra-lateral" id="barra-lateral">
+        <!-- CABEÇALHO DA SIDEBAR -->
+        <div class="barra-lateral-cabecalho">
+            <!-- LOGO -->
+            <div class="logo-container">
+                <div class="logo-icone">
+                   <img src="{% static 'images/logo.png' %}" alt="Logo Oficina Miadas">
+        </div>
+                <div class="logo-texto">
+                    <h2>Oficina</h2>
+                    <p>Miadas</p>
+                </div>
+            </div>
+            
+            <!-- BOTÃO FECHAR (MOBILE) -->
+            <button class="botao-fechar-sidebar" id="botao-fechar-sidebar">
+                <i class="fas fa-times"></i>
+            </button>
+        </div>
+
+        <!-- MENU PRINCIPAL -->
+        <nav class="menu-lateral">
+            <!-- HOME -->
+            <a href="{% url 'home' %}" class="item-menu {% if request.resolver_match.url_name == 'home' %}ativo{% endif %}" data-pagina="home">
+                <div class="icone-menu">
+                    <i class="fas fa-home"></i>
+                </div>
+                <span class="texto-menu">Home</span>
+                <span class="indicador-ativo"></span>
+            </a>
+            
+            <!-- SERVIÇOS -->
+            <a href="{% url 'servicos' %}" class="item-menu {% if request.resolver_match.url_name == 'servicos' %}ativo{% endif %}" data-pagina="servicos">
+                <div class="icone-menu">
+                    <i class="fas fa-tools"></i>
+                </div>
+                <span class="texto-menu">Serviços</span>
+                <span class="indicador-ativo"></span>
+            </a>
+            
+            <!-- AGENDAR -->
+            <a href="{% url 'agendar' %}" class="item-menu {% if request.resolver_match.url_name == 'agendar' %}ativo{% endif %}" data-pagina="agendar">
+                <div class="icone-menu">
+                    <i class="fas fa-calendar-plus"></i>
+                </div>
+                <span class="texto-menu">Agendar</span>
+                <span class="indicador-ativo"></span>
+            </a>
+            
+            <!-- MEUS AGENDAMENTOS -->
+            <a href="{% url 'meus_agendamentos' %}" class="item-menu {% if request.resolver_match.url_name == 'meus_agendamentos' %}ativo{% endif %}" data-pagina="agendamentos">
+                <div class="icone-menu">
+                    <i class="fas fa-calendar-alt"></i>
+                </div>
+                <span class="texto-menu">Agendamentos</span>
+                <span class="indicador-ativo"></span>
+            </a>
+             <!-- MEUS AGENDAMENTOS -->
+            <a href="{% url 'chatbot' %}" class="item-menu {% if request.resolver_match.url_name == 'chatbot' %}ativo{% endif %}" data-pagina="chatbot">
+                <div class="icone-menu">
+                    <i class="fas fa-calendar-alt"></i>
+                </div>
+                <span class="texto-menu">Chatbot</span>
+                <span class="indicador-ativo"></span>
+            </a>
+            <a href="{% url 'chat_cliente' %}" class="item-menu {% if request.resolver_match.url_name == 'chat_cliente' %}ativo{% endif %}" data-pagina="chat">
+                <div class="icone-menu">
+                    <i class="fas fa-comments"></i>
+                </div>
+                <span class="texto-menu">Falar com a oficina</span>
+                <span class="indicador-ativo"></span>
+            </a>
+        
+            
+            <!-- PROMOÇÕES -->
+            <a href="{% url 'publicidades' %}" class="item-menu {% if request.resolver_match.url_name == 'publicidades' %}ativo{% endif %}" data-pagina="promocoes">
+                <div class="icone-menu">
+                    <i class="fas fa-star"></i>
+                </div>
+                <span class="texto-menu">Promoções</span>
+                <span class="indicador-ativo"></span>
+            </a>
+            
+            <!-- NOTIFICAÇÕES -->
+            <a href="{% url 'notificacao' %}" class="item-menu {% if request.resolver_match.url_name == 'notificacao' %}ativo{% endif %}" data-pagina="notificacoes">
+                <div class="icone-menu">
+                    <i class="fas fa-bell"></i>
+                </div>
+                <span class="texto-menu">Notificações</span>
+                <span class="badge-notificacoes" id="badge-notificacoes">0</span>
+                <span class="indicador-ativo"></span>
+            </a>
+        </nav>
+
+        <!-- DIVISOR -->
+        <div class="divisor-sidebar"></div>
+
+        <!-- SEÇÃO DO UTILIZADOR -->
+        <div class="secao-utilizador">
+            <!-- AVATAR -->
+            <div class="avatar-utilizador">
+                <div class="iniciais">{{ user.first_name|first|upper }}{{ user.last_name|first|upper }}</div>
+            </div>
+            
+            <!-- INFORMAÇÕES DO UTILIZADOR -->
+            <div class="info-utilizador">
+                <p class="nome-utilizador">{{ user.first_name|default:user.username }}</p>
+                <p class="email-utilizador">{{ user.email }}</p>
+            </div>
+        </div>
+
+        <!-- MENU RODAPÉ -->
+        <nav class="menu-rodape">
+            <!-- PERFIL -->
+            <a href="{% url 'perfil' %}" class="item-menu-rodape">
+                <i class="fas fa-user-circle"></i>
+                <span>Perfil</span>
+            </a>
+            
+            <!-- CONFIGURAÇÕES -->
+            <a href="{% url 'configuracoes' %}" class="item-menu-rodape">
+                <i class="fas fa-cog"></i>
+                <span>Configurações</span>
+            </a>
+            
+            <!-- SAIR -->
+            <a href="{% url 'logout' %}" class="item-menu-rodape sair">
+                <i class="fas fa-sign-out-alt"></i>
+                <span>Sair</span>
+            </a>
+        </nav>
+    </aside>
+
+    <!-- ============================================================ -->
+    <!-- OVERLAY (MOBILE) -->
+    <!-- ============================================================ -->
+    <div class="overlay-sidebar" id="overlay-sidebar"></div>
+
+    <!-- ============================================================ -->
+    <!-- CONTEÚDO PRINCIPAL -->
+    <!-- ============================================================ -->
+    <div class="wrapper-principal">
+        <!-- CABEÇALHO -->
+        <header class="cabecalho">
+            <!-- LADO ESQUERDO -->
+            <div class="cabecalho-esquerda">
+                <button class="botao-toggle-sidebar" id="botao-toggle-sidebar">
+                    <i class="fas fa-bars"></i>
+                </button>
+                <h1 class="titulo-pagina">{% block page_title %}Dashboard{% endblock %}</h1>
+            </div>
+            
+            <!-- LADO DIREITO -->
+            <div class="cabecalho-direita">
+                <!-- BUSCA -->
+                <div class="busca-cabecalho">
+                    <i class="fas fa-search"></i>
+                    <input type="text" placeholder="Pesquisar..." class="input-busca">
+                </div>
+                
+                <!-- TEMA -->
+                <button class="botao-tema" id="botao-tema" title="Alternar tema">
+                    <i class="fas fa-moon"></i>
+                </button>
+            </div>
+        </header>
+
+        <!-- MENSAGENS DE ALERTA -->
+        {% if messages %}
+        <div class="container-mensagens">
+            {% for message in messages %}
+            <div class="alerta alerta-{{ message.tags }}">
+                <i class="fas fa-check-circle"></i>
+                <span>{{ message }}</span>
+                <button type="button" class="botao-fechar-alerta">&times;</button>
+            </div>
+            {% endfor %}
+        </div>
+        {% endif %}
+
+        <!-- CONTEÚDO PRINCIPAL -->
+        <main class="conteudo-principal">
+            {% block content %}{% endblock %}
+        </main>
+
+        <!-- RODAPÉ -->
+        <footer class="rodape">
+            <p>&copy; 2026 Oficina Miadas. Todos os direitos reservados.</p>
+        </footer>
+    </div>
+
+    <!-- ============================================================ -->
+    <!-- SCRIPTS -->
+    <!-- ============================================================ -->
+    <script src="{% static 'js/base_home.js' %}"></script>
+    {% block extra_js %}{% endblock %}
+</body>
+</html>

@@ -1,0 +1,89 @@
+{% extends 'home/base_cliente.html' %}
+{% load static %}
+
+{% block title %}Agendar Serviço - Oficina Miadas{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/agendar.css' %}">
+{% endblock %}
+
+{% block content %}
+<div class="agendar-container">
+    <div class="agendar-header">
+        <h1><i class="fas fa-calendar-plus"></i> Agendar Serviço</h1>
+        <p>Escolha um serviço e reserve sua data</p>
+    </div>
+
+    <form method="POST" class="agendar-form">
+        {% csrf_token %}
+
+        <!-- SERVIÇO -->
+        <div class="form-group">
+            <label for="servico">
+                <i class="fas fa-tools"></i> Selecione o Serviço *
+            </label>
+            <select name="servico" id="servico" required>
+                <option value="">Escolha um serviço </option>
+                {% for servico in servicos %}
+                <option value="{{ servico.id }}">
+                    {{ servico.nome }} - {{ servico.preco }}Kz
+                </option>
+                {% endfor %}
+            </select>
+            <small>Selecione o tipo de serviço que deseja agendar</small>
+        </div>
+
+        <!-- DATA -->
+        <div class="form-group">
+            <label for="data">
+                <i class="fas fa-calendar"></i> Data *
+            </label>
+            <input type="date" name="data" id="data" required>
+            <small>Escolha uma data disponível</small>
+        </div>
+
+        <!-- HORA -->
+        <div class="form-group">
+            <label for="hora">
+                <i class="fas fa-clock"></i> Hora *
+            </label>
+            <input type="time" name="hora" id="hora" required>
+            <small>Escolha um horário</small>
+        </div>
+
+        <!-- OBSERVAÇÕES -->
+        <div class="form-group">
+            <label for="observacoes">
+                <i class="fas fa-sticky-note"></i> Observações
+            </label>
+            <textarea name="observacoes" id="observacoes" rows="4" placeholder="Descreva qualquer detalhe importante..."></textarea>
+            <small>Adicione informações extras sobre seu agendamento</small>
+        </div>
+
+        <!-- BOTÕES -->
+        <div class="form-actions">
+            <a href="{% url 'home' %}" class="btn btn-secondary">
+                <i class="fas fa-arrow-left"></i> Voltar
+            </a>
+            <button type="submit" class="btn btn-primary">
+                <i class="fas fa-check"></i> Confirmar Agendamento
+            </button>
+        </div>
+    </form>
+
+    <!-- INFO -->
+    <div class="info-section">
+        <h3><i class="fas fa-info-circle"></i> Informações Importantes</h3>
+        <ul>
+            <li>Confirme seus dados antes de agendar</li>
+            <li>Você receberá uma confirmação por email</li>
+            <li>Pode cancelar agendamentos pendentes a qualquer momento</li>
+            <li>Horários de funcionamento: 08:00 - 18:00</li>
+        </ul>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script src="{% static 'js/agendar.js' %}"></script>
+{% endblock %}

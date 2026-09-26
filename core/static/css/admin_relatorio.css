@@ -1,0 +1,443 @@
+/* ============================================================
+   ARQUIVO: admin_relatorio.css
+   DESCRIÇÃO: Estilos para o relatório de agendamentos
+   ============================================================ */
+
+/* ============================================================
+   SEÇÃO 1: VARIÁVEIS E CORES
+   ============================================================ */
+
+:root {
+    --cor-primaria: #ff9500;
+    --cor-sucesso: #10b981;
+    --cor-aviso: #f59e0b;
+    --cor-perigo: #ef4444;
+    --cor-info: #3b82f6;
+    --cor-fundo: #f3f4f6;
+    --cor-texto: #1f2937;
+    --cor-borda: #e5e7eb;
+    --cor-sombra: rgba(0, 0, 0, 0.1);
+}
+
+/* ============================================================
+   SEÇÃO 2: CONTAINER PRINCIPAL
+   ============================================================ */
+
+.container-relatorio {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 2rem;
+    background: #fff;
+    border-radius: 12px;
+    box-shadow: 0 2px 8px var(--cor-sombra);
+}
+
+/* ============================================================
+   SEÇÃO 3: CABEÇALHO
+   ============================================================ */
+
+.header-section {
+    margin-bottom: 2rem;
+    border-bottom: 2px solid var(--cor-primaria);
+    padding-bottom: 1rem;
+}
+
+.header-section h1 {
+    font-size: 2rem;
+    color: var(--cor-texto);
+    margin: 0;
+    font-weight: 700;
+}
+
+.header-section p {
+    color: #6b7280;
+    margin: 0.5rem 0 0 0;
+}
+
+/* ============================================================
+   SEÇÃO 4: FILTROS
+   ============================================================ */
+
+.filter-section {
+    background: var(--cor-fundo);
+    padding: 1.5rem;
+    border-radius: 8px;
+    margin-bottom: 2rem;
+    display: flex;
+    gap: 1rem;
+    flex-wrap: wrap;
+    align-items: flex-end;
+}
+
+.filter-group {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.filter-group label {
+    font-weight: 600;
+    color: var(--cor-texto);
+    font-size: 0.9rem;
+}
+
+.filter-input {
+    padding: 0.75rem 1rem;
+    border: 2px solid var(--cor-borda);
+    border-radius: 6px;
+    font-size: 1rem;
+    transition: border-color 0.3s ease;
+}
+
+.filter-input:focus {
+    outline: none;
+    border-color: var(--cor-primaria);
+    box-shadow: 0 0 0 3px rgba(255, 149, 0, 0.1);
+}
+
+.btn-filtrar {
+    padding: 0.75rem 1.5rem;
+    background: var(--cor-primaria);
+    color: #fff;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    font-weight: 600;
+    transition: all 0.3s ease;
+}
+
+.btn-filtrar:hover {
+    background: #ff7700;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(255, 149, 0, 0.3);
+}
+
+/* ============================================================
+   SEÇÃO 5: RESUMO FINANCEIRO
+   ============================================================ */
+
+.resumo-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 1.5rem;
+    margin-bottom: 2rem;
+}
+
+.resumo-card {
+    background: linear-gradient(135deg, #fff 0%, var(--cor-fundo) 100%);
+    padding: 1.5rem;
+    border-radius: 8px;
+    border-left: 4px solid var(--cor-primaria);
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    box-shadow: 0 2px 4px var(--cor-sombra);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.resumo-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 4px 12px var(--cor-sombra);
+}
+
+.resumo-card.receita {
+    border-left-color: var(--cor-sucesso);
+}
+
+.resumo-card.pendente {
+    border-left-color: var(--cor-aviso);
+}
+
+.resumo-card.cancelado {
+    border-left-color: var(--cor-perigo);
+}
+
+.resumo-card.media {
+    border-left-color: var(--cor-info);
+}
+
+.resumo-icon {
+    font-size: 2rem;
+}
+
+.resumo-content h3 {
+    margin: 0;
+    font-size: 0.9rem;
+    color: #6b7280;
+    text-transform: uppercase;
+    font-weight: 600;
+}
+
+.resumo-valor {
+    margin: 0.5rem 0 0 0;
+    font-size: 1.8rem;
+    font-weight: 700;
+    color: var(--cor-texto);
+}
+
+/* ============================================================
+   SEÇÃO 6: GRÁFICOS
+   ============================================================ */
+
+.graficos-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+    gap: 2rem;
+    margin-bottom: 2rem;
+}
+
+.grafico-card {
+    background: #fff;
+    padding: 1.5rem;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px var(--cor-sombra);
+    border-top: 4px solid var(--cor-primaria);
+}
+
+.grafico-card h3 {
+    margin: 0 0 1rem 0;
+    color: var(--cor-texto);
+    font-size: 1.1rem;
+    font-weight: 600;
+}
+
+.grafico-wrapper {
+    position: relative;
+    height: 300px;
+}
+
+.grafico-full {
+    grid-column: 1 / -1;
+}
+
+.grafico-full .grafico-wrapper {
+    height: 400px;
+}
+
+/* ============================================================
+   SEÇÃO 7: TABELA DE DETALHES
+   ============================================================ */
+
+.detalhes-container {
+    margin-bottom: 2rem;
+}
+
+.detalhes-container h2 {
+    color: var(--cor-texto);
+    margin-bottom: 1rem;
+    font-size: 1.3rem;
+}
+
+.tabela-detalhes {
+    width: 100%;
+    border-collapse: collapse;
+    background: #fff;
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 2px 4px var(--cor-sombra);
+}
+
+.tabela-detalhes thead {
+    background: linear-gradient(135deg, var(--cor-primaria) 0%, #ff7700 100%);
+    color: #fff;
+}
+
+.tabela-detalhes th {
+    padding: 1rem;
+    text-align: left;
+    font-weight: 600;
+    font-size: 0.9rem;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.tabela-detalhes td {
+    padding: 1rem;
+    border-bottom: 1px solid var(--cor-borda);
+    color: var(--cor-texto);
+}
+
+.tabela-detalhes tbody tr:hover {
+    background-color: var(--cor-fundo);
+}
+
+.tabela-detalhes tbody tr:last-child td {
+    border-bottom: none;
+}
+
+.tabela-detalhes .numero {
+    text-align: right;
+    font-weight: 600;
+}
+
+.tabela-detalhes .confirmado {
+    color: var(--cor-sucesso);
+}
+
+.tabela-detalhes .cancelado {
+    color: var(--cor-perigo);
+}
+
+.tabela-detalhes .receita {
+    color: var(--cor-primaria);
+    font-weight: 700;
+}
+
+/* ============================================================
+   SEÇÃO 8: BOTÕES DE AÇÃO
+   ============================================================ */
+
+.acoes-container {
+    display: flex;
+    gap: 1rem;
+    justify-content: center;
+    flex-wrap: wrap;
+    margin-top: 2rem;
+    padding-top: 2rem;
+    border-top: 2px solid var(--cor-borda);
+}
+
+.btn {
+    padding: 0.75rem 1.5rem;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    font-weight: 600;
+    font-size: 1rem;
+    transition: all 0.3s ease;
+}
+
+.btn-exportar {
+    background: var(--cor-primaria);
+    color: #fff;
+}
+
+.btn-exportar:hover {
+    background: #ff7700;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(255, 149, 0, 0.3);
+}
+
+.btn-imprimir {
+    background: var(--cor-info);
+    color: #fff;
+}
+
+.btn-imprimir:hover {
+    background: #2563eb;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(59, 130, 246, 0.3);
+}
+
+/* ============================================================
+   SEÇÃO 9: RESPONSIVO
+   ============================================================ */
+
+@media (max-width: 768px) {
+    .container-relatorio {
+        padding: 1rem;
+    }
+
+    .header-section h1 {
+        font-size: 1.5rem;
+    }
+
+    .filter-section {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .filter-group {
+        width: 100%;
+    }
+
+    .filter-input {
+        width: 100%;
+    }
+
+    .btn-filtrar {
+        width: 100%;
+    }
+
+    .resumo-container {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 1rem;
+    }
+
+    .resumo-card {
+        padding: 1rem;
+    }
+
+    .resumo-icon {
+        font-size: 1.5rem;
+    }
+
+    .resumo-valor {
+        font-size: 1.3rem;
+    }
+
+    .graficos-container {
+        grid-template-columns: 1fr;
+        gap: 1.5rem;
+    }
+
+    .grafico-wrapper {
+        height: 250px;
+    }
+
+    .grafico-full .grafico-wrapper {
+        height: 300px;
+    }
+
+    .tabela-detalhes {
+        font-size: 0.85rem;
+    }
+
+    .tabela-detalhes th,
+    .tabela-detalhes td {
+        padding: 0.75rem;
+    }
+
+    .acoes-container {
+        flex-direction: column;
+    }
+
+    .btn {
+        width: 100%;
+    }
+}
+
+@media (max-width: 480px) {
+    .resumo-container {
+        grid-template-columns: 1fr;
+    }
+
+    .tabela-detalhes {
+        font-size: 0.75rem;
+    }
+
+    .tabela-detalhes th,
+    .tabela-detalhes td {
+        padding: 0.5rem;
+    }
+}
+
+/* ============================================================
+   SEÇÃO 10: IMPRESSÃO
+   ============================================================ */
+
+@media print {
+    .filter-section,
+    .acoes-container {
+        display: none;
+    }
+
+    .container-relatorio {
+        box-shadow: none;
+        padding: 0;
+    }
+
+    .grafico-card {
+        page-break-inside: avoid;
+    }
+}

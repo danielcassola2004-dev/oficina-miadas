@@ -1,0 +1,661 @@
+{% extends 'admin/base_admin.html' %}
+{% load static %}
+
+{% block title %}
+Relatório - Painel Admin
+{% endblock %}
+
+
+{% block extra_css %}
+
+<link rel="stylesheet" href="{% static 'css/admin_relatorio.css' %}">
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
+{% endblock %}
+
+
+
+{% block content %}
+
+
+<div class="container-relatorio">
+
+
+<!-- ================= HEADER ================= -->
+
+<section class="header-section">
+
+    <h1>
+        <i class="fas fa-chart-line"></i>
+        Relatório de Agendamentos
+    </h1>
+
+
+    <p>
+        Análise completa dos agendamentos, serviços e receitas
+    </p>
+
+</section>
+
+
+
+
+
+<!-- ================= FILTROS ================= -->
+
+<section class="filter-section">
+
+
+    <div class="filter-group">
+
+        <label>
+            <i class="fas fa-calendar"></i>
+            Data Inicial
+        </label>
+
+
+        <input 
+            type="date"
+            id="dataInicio"
+            class="filter-input"
+        >
+
+    </div>
+
+
+
+    <div class="filter-group">
+
+        <label>
+            <i class="fas fa-calendar"></i>
+            Data Final
+        </label>
+
+
+        <input 
+            type="date"
+            id="dataFim"
+            class="filter-input"
+        >
+
+    </div>
+
+
+
+    <button 
+        class="btn-filtrar"
+        onclick="aplicarFiltros()"
+    >
+
+        <i class="fas fa-search"></i>
+
+        Filtrar
+
+    </button>
+
+
+</section>
+
+
+
+
+
+
+<!-- ================= CARDS ================= -->
+
+
+<section class="resumo-container">
+
+
+
+<div class="resumo-card receita">
+
+    <div class="resumo-icon">
+        <i class="fas fa-money-bill-wave"></i>
+    </div>
+
+
+    <div>
+
+        <h3>
+            Receita Total
+        </h3>
+
+
+        <p class="resumo-valor">
+
+            {{ receita_total|floatformat:2 }} Kz
+
+        </p>
+
+
+    </div>
+
+
+</div>
+
+
+
+
+
+<div class="resumo-card pendente">
+
+
+    <div class="resumo-icon">
+
+        <i class="fas fa-clock"></i>
+
+    </div>
+
+
+    <div>
+
+
+        <h3>
+            Pagamentos Pendentes
+        </h3>
+
+
+        <p class="resumo-valor">
+
+            {{ receita_pendente|floatformat:2 }} Kz
+
+        </p>
+
+
+    </div>
+
+
+</div>
+
+
+
+
+
+
+
+<div class="resumo-card cancelado">
+
+
+    <div class="resumo-icon">
+
+        <i class="fas fa-ban"></i>
+
+    </div>
+
+
+    <div>
+
+
+        <h3>
+            Cancelamentos
+        </h3>
+
+
+        <p class="resumo-valor">
+
+            {{ receita_cancelada|floatformat:2 }} Kz
+
+        </p>
+
+
+    </div>
+
+
+</div>
+
+
+
+
+
+
+
+
+<div class="resumo-card media">
+
+
+    <div class="resumo-icon">
+
+        <i class="fas fa-chart-simple"></i>
+
+    </div>
+
+
+
+    <div>
+
+
+        <h3>
+            Ticket Médio
+        </h3>
+
+
+
+        <p class="resumo-valor">
+
+            {{ ticket_medio|floatformat:2 }} Kz
+
+        </p>
+
+
+    </div>
+
+
+</div>
+
+
+
+</section>
+
+
+
+
+
+
+
+<!-- ================= GRÁFICOS ================= -->
+
+
+<section class="graficos-container">
+
+
+<div class="grafico-card">
+
+
+<h3>
+
+<i class="fas fa-chart-pie"></i>
+
+Status dos Agendamentos
+
+</h3>
+
+
+<div class="grafico-wrapper">
+
+<canvas id="chartStatus"></canvas>
+
+</div>
+
+
+</div>
+
+
+
+
+
+
+<div class="grafico-card">
+
+
+<h3>
+
+<i class="fas fa-coins"></i>
+
+Receita por Serviço
+
+</h3>
+
+
+<div class="grafico-wrapper">
+
+<canvas id="chartReceita"></canvas>
+
+</div>
+
+
+</div>
+
+
+
+
+
+
+<div class="grafico-card grafico-full">
+
+
+<h3>
+
+<i class="fas fa-arrow-trend-up"></i>
+
+Tendência de Agendamentos
+
+</h3>
+
+
+<div class="grafico-wrapper">
+
+<canvas id="chartTendencia"></canvas>
+
+</div>
+
+
+</div>
+<!-- ================= GRÁFICO COMPARECIMENTO ================= -->
+
+
+<div class="grafico-card">
+
+
+<h3>
+
+<i class="fas fa-user-check"></i>
+
+Taxa de Comparecimento
+
+</h3>
+
+
+
+<div class="grafico-wrapper">
+
+<canvas id="chartComparecimento"></canvas>
+
+</div>
+
+
+</div>
+
+
+
+
+
+
+
+<!-- ================= GRÁFICO PAGAMENTO ================= -->
+
+
+<div class="grafico-card">
+
+
+<h3>
+
+<i class="fas fa-credit-card"></i>
+
+Métodos de Pagamento
+
+</h3>
+
+
+
+<div class="grafico-wrapper">
+
+<canvas id="chartMetodos"></canvas>
+
+</div>
+
+
+</div>
+
+
+
+</section>
+
+
+
+
+
+
+
+
+<!-- ================= TABELA ================= -->
+
+
+<section class="detalhes-container">
+
+
+<h2>
+
+<i class="fas fa-table"></i>
+
+Detalhes por Serviço
+
+</h2>
+
+
+
+
+<table class="tabela-detalhes">
+
+
+<thead>
+
+<tr>
+
+<th>Serviço</th>
+
+<th>Total</th>
+
+<th>Confirmados</th>
+
+<th>Cancelados</th>
+
+<th>Receita</th>
+
+<th>Ticket Médio</th>
+
+
+</tr>
+
+
+</thead>
+
+
+
+
+<tbody>
+
+
+{% for servico in servicos_detalhes %}
+
+
+<tr>
+
+
+<td>
+
+{{ servico.nome }}
+
+</td>
+
+
+
+<td>
+
+{{ servico.total }}
+
+</td>
+
+
+
+<td class="confirmado">
+
+{{ servico.confirmados }}
+
+</td>
+
+
+
+<td class="cancelado">
+
+{{ servico.cancelados }}
+
+</td>
+
+
+
+<td>
+
+{{ servico.receita|floatformat:2 }} Kz
+
+</td>
+
+
+
+<td>
+
+{{ servico.ticket_medio|floatformat:2 }} Kz
+
+</td>
+
+
+
+</tr>
+
+
+
+{% empty %}
+
+
+<tr>
+
+<td colspan="6">
+
+Nenhum dado disponível
+
+</td>
+
+
+</tr>
+
+
+{% endfor %}
+
+
+
+</tbody>
+
+
+</table>
+
+
+</section>
+
+
+
+
+
+
+
+
+<!-- ================= AÇÕES ================= -->
+
+
+<section class="acoes-container">
+
+
+<button 
+class="btn btn-exportar"
+onclick="exportarPDF()"
+>
+
+<i class="fas fa-file-pdf"></i>
+
+Exportar PDF
+
+</button>
+
+
+
+
+
+<button 
+class="btn btn-imprimir"
+onclick="window.print()"
+>
+
+<i class="fas fa-print"></i>
+
+Imprimir
+
+</button>
+
+
+
+</section>
+
+
+
+
+</div>
+
+
+
+{% endblock %}
+
+
+
+
+
+
+
+{% block extra_js %}
+
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+
+
+<script>
+
+
+const dadosGraficos = {
+
+
+status:
+
+{{ dados_status|safe }},
+
+
+
+receita:
+
+{{ dados_receita|safe }},
+
+
+
+tendencia:
+
+{{ dados_tendencia|safe }},
+
+
+
+comparecimento:
+
+{{ dados_comparecimento|safe }},
+
+
+
+metodos:
+
+{{ dados_metodos|safe }}
+
+
+
+};
+
+
+
+
+
+function exportarPDF(){
+
+
+window.location.href = "{% url 'exportar_relatorio_pdf' %}";
+
+
+}
+
+
+
+</script>
+
+
+
+
+<script src="{% static 'js/admin_relatorio.js' %}"></script>
+
+
+
+{% endblock %}

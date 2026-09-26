@@ -1,0 +1,321 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+    <meta charset="UTF-8">
+    <title>Oficina Miadas | Excelência Automotiva</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <!-- Google Fonts: Poppins & Inter -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&family=Poppins:wght@300;500;700;800&display=swap" rel="stylesheet">
+    
+    <!-- Font Awesome para Ícones -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- AOS (Animate On Scroll) -->
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    
+    <!-- CSS Personalizado -->
+    <link rel="stylesheet" href="{% static 'css/landing.css' %}">
+</head>
+<body>
+
+<header class="header" id="header">
+    <div class="container header-content">
+        <div class="logo">
+            <div class="logo-img-wrapper">
+                <img src="{% static 'images/logo.png' %}" alt="Logo Oficina Miadas">
+            </div>
+            <span class="logo-text">Oficina <span class="highlight">Miadas</span></span>
+        </div>
+
+        <nav class="nav" id="nav">
+            <ul class="nav-list">
+                <li><a href="#servicos" class="nav-link">Serviços</a></li>
+                <li><a href="#publicidade" class="nav-link">Publicidade</a></li>
+                <li><a href="#sobre" class="nav-link">Sobre</a></li>
+                <li><a href="#contactos" class="nav-link">Contactos</a></li>
+                <li class="nav-auth ">
+                    <a href="{% url 'login' %}" class="btn btn-outline">Login</a>
+                    <a href="{% url 'cadastro' %}" class="btn btn-primary">Cadastro</a>
+                </li>
+            </ul>
+        </nav>
+
+        <div class="menu-toggle" id="menu-toggle">
+            <div class="bar"></div>
+            <div class="bar"></div>
+            <div class="bar"></div>
+        </div>
+    </div>
+</header>
+
+<!-- HERO SECTION -->
+<section class="hero">
+    <div class="hero-video-container">
+        <video autoplay muted loop playsinline class="hero-video">
+            <source src="{% static 'videos/Video 5.mp4' %}" type="video/mp4">
+        </video>
+        <div class="hero-overlay"></div>
+    </div>
+
+    <div class="container hero-content-wrapper">
+        <div class="hero-text" data-aos="fade-up" data-aos-duration="1000">
+            <span class="hero-badge">O Melhor Cuidado para o seu Carro</span>
+            <h1>Agende Seus Serviços <br><span class="text-gradient">Agora Mesmo</span></h1>
+            <p>Profissionalismo, qualidade e confiança para o seu automóvel com tecnologia de ponta em Luanda.</p>
+            <div class="hero-btns">
+                <a href="{% url 'login' %}" class="btn btn-primary btn-lg">Agendar Agora <i class="fas fa-calendar-alt"></i></a>
+                <a href="#servicos" class="btn btn-outline-white btn-lg">Ver Serviços</a>
+            </div>
+        </div>
+    </div>
+    
+    <div class="scroll-indicator">
+        <div class="mouse"></div>
+    </div>
+</section>
+
+<!-- SERVIÇOS - DINÂMICOS DO BANCO DE DADOS -->
+<section id="servicos" class="section-padding">
+    <div class="container">
+        <div class="section-header" data-aos="fade-up">
+            <span class="subtitle">O que fazemos</span>
+            <h2>Nossos Serviços Especializados</h2>
+            <div class="divider"></div>
+        </div>
+
+        <!-- Comentário: Grid de serviços que recebe dados do banco de dados -->
+        <div class="services-grid">
+            {% if servicos %}
+                <!-- Comentário: Loop através dos serviços cadastrados -->
+                {% for servico in servicos %}
+                <div class="service-card" data-aos="fade-up" data-aos-delay="{{ forloop.counter }}00">
+                    <!-- Comentário: Imagem do serviço -->
+                    <div class="service-img">
+                        {% if servico.imagem %}
+                            <img src="{{ servico.imagem.url }}" alt="{{ servico.nome }}">
+                        {% else %}
+                            <!-- Comentário: Imagem padrão se não houver imagem cadastrada -->
+                            <img src="{% static 'images/MECANICA GERAL.jpg' %}" alt="{{ servico.nome }}">
+                        {% endif %}
+                        <!-- Comentário: Overlay com botão de ação -->
+                        <div class="service-overlay">
+                            <a href="{% url 'login' %}" class="btn-circle"><i class="fas fa-plus"></i></a>
+                        </div>
+                    </div>
+                    <!-- Comentário: Informações do serviço -->
+                    <div class="service-info">
+                        <div class="service-icon"><i class="fas fa-tools"></i></div>
+                        <h3>{{ servico.nome }}</h3>
+                        <p>{{ servico.descricao }}</p>
+                        <a href="{% url 'login' %}" class="read-more">Agendar Serviço <i class="fas fa-arrow-right"></i></a>
+                    </div>
+                </div>
+                {% endfor %}
+            {% else %}
+                <!-- Comentário: Mensagem quando não há serviços cadastrados -->
+                <div class="empty-state" data-aos="fade-up">
+                    <i class="fas fa-wrench"></i>
+                    <p>Nenhum serviço disponível no momento. Por favor, tente mais tarde.</p>
+                </div>
+            {% endif %}
+        </div>
+    </div>
+</section>
+
+<!-- PUBLICIDADE -->
+<section id="publicidade" class="section-padding bg-dark">
+    <div class="container">
+        <div class="section-header light" data-aos="fade-up">
+            <span class="subtitle">Novidades & Ofertas</span>
+            <h2>Publicidade e Promoções</h2>
+            <div class="divider"></div>
+        </div>
+
+        <div class="promo-grid">
+            {% for pub in publicidades %}
+            <div class="promo-card" data-aos="zoom-in" data-aos-delay="{{ forloop.counter }}00">
+                <div class="promo-img">
+                    {% if pub.imagem %}
+                    <img src="{{ pub.imagem.url }}" alt="{{ pub.titulo }}">
+                    {% endif %}
+                    <div class="promo-tag">Destaque</div>
+                </div>
+                <div class="promo-content">
+                    <h3>{{ pub.titulo }}</h3>
+                    <p>{{ pub.descricao|truncatewords:12 }}</p>
+                    <button class="btn btn-primary btn-sm btn-modal"
+                        data-img="{{ pub.imagem.url }}"
+                        data-title="{{ pub.titulo }}"
+                        data-text="{{ pub.descricao }}">
+                        Saber Mais <i class="fas fa-info-circle"></i>
+                    </button>
+                </div>
+            </div>
+            {% empty %}
+            <div class="empty-state" data-aos="fade-up">
+                <i class="fas fa-bullhorn"></i>
+                <p>Nenhuma publicidade disponível no momento.</p>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</section>
+
+<!-- SOBRE NÓS -->
+<section id="sobre" class="section-padding">
+    <div class="container">
+        <div class="about-wrapper">
+            <div class="about-img" data-aos="fade-right">
+                <div class="img-stack">
+                    <img src="{% static 'images/publicidade.jpg' %}" alt="Oficina" class="main-img">
+                    <div class="experience-badge">
+                        <span class="number">10+</span>
+                        <span class="text">Anos de Experiência</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="about-text" data-aos="fade-left">
+                <span class="subtitle">Quem Somos</span>
+                <h2>Compromisso com a sua Segurança</h2>
+                <p>A <strong>Oficina Miadas</strong> nasceu da paixão pelo setor automóvel e do desejo de oferecer um serviço diferenciado em Luanda. Localizados estrategicamente no Gamek e Talatona, combinamos tecnologia de ponta com uma equipa altamente qualificada.</p>
+                <ul class="about-list">
+                    <li><i class="fas fa-check-circle"></i> Atendimento Personalizado</li>
+                    <li><i class="fas fa-check-circle"></i> Peças Genuínas</li>
+                    <li><i class="fas fa-check-circle"></i> Garantia em todos os serviços</li>
+                </ul>
+                <a href="#contactos" class="btn btn-primary">Fale Connosco</a>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section id="sobre" class="section-padding">
+    <div class="container">
+        <div class="about-wrapper">
+            <div class="about-img" data-aos="fade-right">
+                <div class="img-stack">
+                    <img src="{% static 'images/Daniel.png' %}" alt="Oficina" class="main-img">
+                    <div class="experience-badge">
+                        <span class="number">+Agora?😎</span>
+                        <span class="text">Experiência e tecnologia</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="about-text" data-aos="fade-left">
+                <span class="subtitle">Quem Somos</span>
+                <h2>Nova era da Oficina Miadas💻</h2>
+                <p>A <strong>Oficina Miadas</strong> A Oficina Miadas entra numa nova fase com o lançamento do nosso sistema web, criado para tornar tudo mais simples, rápido e organizado para os nossos clientes em Luanda.
+
+Agora, através da nossa plataforma online, é possível conhecer os nossos serviços, fazer agendamentos e acompanhar tudo de forma mais prática, sem complicações.
+
+Com unidades no Gamek e em Talatona, continuamos a unir experiência no setor automóvel com tecnologia moderna para melhorar cada vez mais o atendimento.
+
+
+                    .</p>
+                <ul class="about-list">O que você encontra no nosso sistema:
+                    <li><i class="fas fa-check-circle"></i> Atendimento mais rápido e organizado ⚡</li>
+                    <li><i class="fas fa-check-circle"></i>Agendamento online de serviços 📅</li>
+                    <li><i class="fas fa-check-circle"></i> Gestão moderna e transparente dos serviços 🔧</li>
+                    <li><i class="fas fa-check-circle"></i> Experiência mais cómoda para todos os clientes 🚗</li>
+                </ul>
+                <a href="#contactos" class="btn btn-primary">Fale Connosco</a>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- CONTACTOS -->
+<section id="contactos" class="section-padding bg-light">
+    <div class="container">
+        <div class="section-header" data-aos="fade-up">
+            <span class="subtitle">Onde Estamos</span>
+            <h2>Entre em Contacto</h2>
+            <div class="divider"></div>
+        </div>
+
+        <div class="contact-grid">
+            <div class="contact-card" data-aos="fade-up" data-aos-delay="100">
+                <img src="{% static 'images/gps.gif' %}" alt="Oficina">
+                <h3>Localização</h3>
+                <p>Luanda / Gamek & Talatona</p>
+                <a href="#" class="contact-link">Ver no Mapa</a>
+            </div>
+
+            <div class="contact-card" data-aos="fade-up" data-aos-delay="200">
+                <img src="{% static 'images/phone.gif' %}" alt="Oficina">
+                <h3>Telefone</h3>
+                <p>+244 976 598 208</p>
+                <a href="tel:976598208" class="contact-link">Ligar Agora</a>
+            </div>
+
+            <div class="contact-card" data-aos="fade-up" data-aos-delay="300">
+             <img src="{% static 'images/email.gif' %}" alt="Oficina">
+                <h3>Email</h3>
+                <p>oficinamiadas@email.com</p>
+                <a href="mailto:oficinamiadas@email.com" class="contact-link">Enviar Mensagem</a>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- FOOTER -->
+<footer class="footer">
+    <div class="container">
+        <div class="footer-top">
+            <div class="footer-brand">
+                <div class="logo">
+                    <span class="logo-text">Oficina <span class="highlight">Miadas</span></span>
+                </div>
+                <p>Sua oficina de confiança em Luanda. Tecnologia e profissionalismo ao seu serviço.</p>
+            </div>
+
+            <div class="footer-links">
+                <h4>Links Rápidos</h4>
+                <ul>
+                    <li><a href="#servicos">Serviços</a></li>
+                    <li><a href="#publicidade">Publicidade</a></li>
+                    <li><a href="#sobre">Sobre</a></li>
+                    <li><a href="#contactos">Contactos</a></li>
+                </ul>
+            </div>
+
+            <div class="footer-social">
+                <h4>Redes Sociais</h4>
+                <div class="social-icons">
+                  <img src="{% static 'images/whatsap.png' %}" alt="WhatsApp" class="main-img">
+                   <img src="{% static 'images/insta.png' %}" alt="Instagram" class="main-img">
+                   <img src="{% static 'images/face.png' %}" alt="Oficina" class="main-img">
+                </div>
+            </div>
+        </div>
+
+        <div class="footer-bottom">
+            <p>&copy; 2026 Oficina Miadas. Todos os direitos reservados.</p>
+        </div>
+    </div>
+</footer>
+
+<!-- Modal para Publicidades -->
+<div class="modal-overlay" id="modal-overlay">
+    <div class="modal-content">
+        <button class="modal-close" id="modal-close"><i class="fas fa-times"></i></button>
+        <img id="modal-img" src="" alt="Modal Image">
+        <div class="modal-text-content">
+            <h3 id="modal-title"></h3>
+            <p id="modal-text"></p>
+        </div>
+    </div>
+</div>
+
+<!-- Scripts -->
+<script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+<script>
+    AOS.init({ once: true });
+</script>
+<script src="{% static 'js/landing.js' %}"></script>
+</body>
+</html>

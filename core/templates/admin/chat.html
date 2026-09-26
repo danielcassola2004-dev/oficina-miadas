@@ -1,0 +1,164 @@
+{% extends 'admin/base_admin.html' %}
+{% load static %}
+
+{% block title %}Chat - Oficina Miadas{% endblock %}
+
+{% block content %}
+<!-- ============================================================
+     SEÇÃO: CHAT ADMIN
+     ============================================================ -->
+<div class="container-chat">
+    <!-- Lista de conversas -->
+    <div class="lista-conversas">
+        <h3>Conversas</h3>
+        <div class="conversas">
+            {% for conversa in conversas %}
+                <a href="?cliente={{ conversa.remetente.id }}" class="conversa-item {% if cliente.id == conversa.remetente.id %}ativa{% endif %}">
+                    <div class="avatar">{{ conversa.remetente.first_name|first }}</div>
+                    <div class="info">
+                        <h4>{{ conversa.remetente.first_name }}</h4>
+                        <p>Clique para abrir conversa</p>
+                    </div>
+                </a>
+            {% empty %}
+                <p class="sem-conversas">Nenhuma conversa</p>
+            {% endfor %}
+        </div>
+    </div>
+    
+    <!-- Área de chat -->
+    {% if cliente %}
+    <div class="area-chat">
+        <div class="cabecalho-chat">
+            <h3>{{ cliente.first_name }}</h3>
+            <p>{{ cliente.email }}</p>
+        </div>
+        
+        <div class="mensagens-container" id="mensagens-container">
+            {% for msg in mensagens %}
+                <div class="mensagem {% if msg.remetente == request.user %}enviada{% else %}recebida{% endif %}">
+                    <div class="conteudo-msg">{{ msg.conteudo }}</div>
+                    <div class="hora-msg">{{ msg.criada_em|date:"H:i" }}</div>
+                </div>
+            {% endfor %}
+        </div>
+        
+        <form class="formulario-chat" id="formulario-chat">
+            {% csrf_token %}
+            <input type="hidden" name="cliente_id" value="{{ cliente.id }}">
+            <textarea name="conteudo" placeholder="Digite sua mensagem..." required></textarea>
+            <button type="submit" class="btn-enviar">Enviar</button>
+        </form>
+    </div>
+    {% else %}
+    <div class="sem-conversa">
+        <p>Selecione uma conversa para começar</p>
+    </div>
+    {% endif %}
+</div>
+
+<style>
+.container-chat {
+    display: flex;
+    height: calc(100vh - 100px);
+    gap: 20px;
+}
+
+.lista-conversas {
+    width: 300px;
+    border-right: 1px solid var(--borda);
+    overflow-y: auto;
+}
+
+.area-chat {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+}
+
+.mensagens-container {
+    flex: 1;
+    overflow-y: auto;
+    padding: 20px;
+}
+
+.mensagem {
+    margin-bottom: 15px;
+    display: flex;
+    flex-direction: column;
+}
+
+.mensagem.enviada {
+    align-items: flex-end;
+}
+
+.mensagem.recebida {
+    align-items: flex-start;
+}
+
+.conteudo-msg {
+    max-width: 70%;
+    padding: 10px 15px;
+    border-radius: 8px;
+    background: var(--fundo-secundario);
+    color: var(--texto);
+}
+
+.mensagem.enviada .conteudo-msg {
+    background: #007bff;
+    color: white;
+}
+
+.formulario-chat {
+    display: flex;
+    gap: 10px;
+    padding: 20px;
+    border-top: 1px solid var(--borda);
+}
+
+.formulario-chat textarea {
+    flex: 1;
+    padding: 10px;
+    border: 1px solid var(--borda);
+    border-radius: 8px;
+    resize: none;
+    height: 50px;
+}
+
+.btn-enviar {
+    padding: 10px 20px;
+    background: #007bff;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+}
+</style>
+
+<script>
+// ============================================================
+// SEÇÃO: JAVASCRIPT - CHAT ADMIN
+// ============================================================
+
+document.getElementById('formulario-chat').addEventListener('submit', function(e) {
+    e.preventDefault();
+    
+    const formData = new FormData(this);
+    
+    fetch('{% url "enviar_mensagem_admin" %}', {
+        method: 'POST',
+        body: formData
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (data.status === 'sucesso') {
+            // Limpar textarea
+            document.querySelector('textarea').value = '';
+            
+            // Recarregar mensagens
+            location.reload();
+        }
+    });
+});
+</script>
+{% endblock %}

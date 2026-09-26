@@ -1,0 +1,275 @@
+/* ============================================================
+   ARQUIVO: cadastro_seguro.css
+   DESCRIÇÃO: Estilos adicionais para formulário de cadastro seguro
+   IDIOMA: Português
+   ============================================================ */
+
+/* ============================================================
+   SEÇÃO 1: CAMPOS DE FORMULÁRIO
+   ============================================================ */
+
+/* Comentário: Wrapper para campos de senha com botão de toggle */
+.password-wrapper {
+    position: relative;
+    display: flex;
+    align-items: center;
+}
+
+.password-wrapper .form-input {
+    flex: 1;
+    padding-right: 45px;
+}
+
+/* Comentário: Botão para mostrar/ocultar senha */
+.toggle-password {
+    position: absolute;
+    right: 12px;
+    background: none;
+    border: none;
+    color: rgba(255, 255, 255, 0.6);
+    cursor: pointer;
+    font-size: 16px;
+    transition: all 0.3s ease;
+    padding: 8px;
+}
+
+.toggle-password:hover {
+    color: rgba(255, 255, 255, 1);
+    transform: scale(1.1);
+}
+
+/* ============================================================
+   SEÇÃO 2: INDICADOR DE FORÇA DE SENHA
+   ============================================================ */
+
+/* Comentário: Container do indicador de força */
+.password-strength {
+    margin-top: 8px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+/* Comentário: Barra de força de senha */
+.strength-bar {
+    flex: 1;
+    height: 4px;
+    background-color: rgba(255, 255, 255, 0.2);
+    border-radius: 2px;
+    overflow: hidden;
+}
+
+.strength-bar::after {
+    content: '';
+    display: block;
+    height: 100%;
+    width: 0%;
+    background-color: #dc3545;
+    border-radius: 2px;
+    transition: all 0.3s ease;
+}
+
+/* Comentário: Força FRACA */
+.password-strength.strength-weak .strength-bar::after {
+    width: 33%;
+    background-color: #dc3545;
+}
+
+/* Comentário: Força MÉDIA */
+.password-strength.strength-medium .strength-bar::after {
+    width: 66%;
+    background-color: #ffc107;
+}
+
+/* Comentário: Força FORTE */
+.password-strength.strength-strong .strength-bar::after {
+    width: 100%;
+    background-color: #28a745;
+}
+
+/* Comentário: Texto de força */
+.strength-text {
+    font-size: 12px;
+    color: rgba(255, 255, 255, 0.7);
+    white-space: nowrap;
+}
+
+.strength-text span {
+    font-weight: 600;
+    color: rgba(255, 255, 255, 1);
+}
+
+/* ============================================================
+   SEÇÃO 3: VALIDAÇÃO DE FORMULÁRIO
+   ============================================================ */
+
+/* Comentário: Feedback de validação */
+.validation-feedback {
+    font-size: 12px;
+    color: #dc3545;
+    margin-top: 6px;
+    display: none;
+    animation: slideDown 0.3s ease;
+}
+
+.form-group.invalid .validation-feedback {
+    display: block;
+}
+
+/* Comentário: Input inválido */
+.form-input.invalid {
+    border-color: #dc3545 !important;
+    background-color: rgba(220, 53, 69, 0.1) !important;
+}
+
+/* Comentário: Input válido */
+.form-input.valid {
+    border-color: #28a745 !important;
+}
+
+/* Comentário: Animação de slide down */
+@keyframes slideDown {
+    from {
+        opacity: 0;
+        transform: translateY(-10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* ============================================================
+   SEÇÃO 4: CHECKBOX
+   ============================================================ */
+
+/* Comentário: Estilo customizado para checkbox */
+.form-group.checkbox {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    margin-top: 15px;
+}
+
+.form-group.checkbox input[type="checkbox"] {
+    width: 20px;
+    height: 20px;
+    margin-top: 2px;
+    cursor: pointer;
+    accent-color: #ff9500;
+}
+
+.form-group.checkbox label {
+    margin: 0;
+    font-size: 14px;
+    color: rgba(255, 255, 255, 0.8);
+    cursor: pointer;
+    line-height: 1.5;
+}
+
+.form-group.checkbox label a {
+    color: #ff9500;
+    text-decoration: none;
+    transition: all 0.3s ease;
+}
+
+.form-group.checkbox label a:hover {
+    text-decoration: underline;
+    color: #ffb84d;
+}
+
+/* ============================================================
+   SEÇÃO 5: MENSAGENS DE AJUDA
+   ============================================================ */
+
+/* Comentário: Texto de ajuda dos campos */
+.form-help {
+    font-size: 12px;
+    color: rgba(255, 255, 255, 0.6);
+    display: block;
+    margin-top: 6px;
+    font-style: italic;
+}
+
+/* ============================================================
+   SEÇÃO 6: ÍCONES NOS LABELS
+   ============================================================ */
+
+/* Comentário: Ícones nos labels */
+.form-group label i {
+    margin-right: 8px;
+    color: #ff9500;
+    font-size: 14px;
+}
+
+/* ============================================================
+   SEÇÃO 7: RESPONSIVIDADE
+   ============================================================ */
+
+@media (max-width: 480px) {
+    /* Comentário: Ajustar para mobile */
+    .password-wrapper {
+        flex-direction: column;
+    }
+
+    .password-wrapper .form-input {
+        width: 100%;
+        padding-right: 15px;
+    }
+
+    .toggle-password {
+        right: 12px;
+    }
+
+    .form-group.checkbox {
+        flex-direction: column;
+    }
+
+    .form-group.checkbox input[type="checkbox"] {
+        margin-top: 0;
+    }
+
+    .strength-bar {
+        height: 3px;
+    }
+}
+
+/* ============================================================
+   SEÇÃO 8: ANIMAÇÕES
+   ============================================================ */
+
+/* Comentário: Animação de entrada */
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.form-group {
+    animation: fadeInUp 0.5s ease;
+}
+
+.form-group:nth-child(1) {
+    animation-delay: 0.1s;
+}
+
+.form-group:nth-child(2) {
+    animation-delay: 0.2s;
+}
+
+.form-group:nth-child(3) {
+    animation-delay: 0.3s;
+}
+
+.form-group:nth-child(4) {
+    animation-delay: 0.4s;
+}
+
+.form-group:nth-child(5) {
+    animation-delay: 0.5s;
+}

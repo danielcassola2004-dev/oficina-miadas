@@ -1,0 +1,143 @@
+{% extends 'admin/base_admin.html' %}
+{% load static %}
+
+{% block title %}Meu Perfil - Admin{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/admin_perfil.css' %}">
+{% endblock %}
+
+{% block content %}
+<div class="page-header">
+    <div>
+        <h1>Meu Perfil</h1>
+        <p class="subtitle">Gerencie suas informações pessoais</p>
+    </div>
+</div>
+
+<!-- PERFIL CONTAINER -->
+<div class="perfil-container">
+    <!-- CARD DE PERFIL -->
+    <div class="perfil-card">
+        <div class="perfil-header">
+            <div class="avatar-section">
+                <img src="https://ui-avatars.com/api/?name={{ user.first_name|default:user.username }}&background=ff6b00&color=fff&size=120" alt="Perfil" class="avatar-large">
+                <button class="btn-change-avatar" title="Alterar Foto">
+                    <i class="fas fa-camera"></i>
+                </button>
+            </div>
+            <div class="perfil-info">
+                <h2>{{ user.first_name|default:user.username }}</h2>
+                <p class="role">Administrador</p>
+                <p class="joined">Membro desde {{ user.date_joined|date:"d \d\e F \d\e Y" }}</p>
+            </div>
+        </div>
+
+        <!-- FORM DE EDIÇÃO -->
+        <form method="POST" class="perfil-form">
+            {% csrf_token %}
+
+            <div class="form-section">
+                <h3>Informações Pessoais</h3>
+
+                <div class="form-group">
+                    <label for="first_name">Nome Completo</label>
+                    <input type="text" id="first_name" name="first_name" value="{{ user.first_name }}" class="form-control">
+                </div>
+
+                <div class="form-group">
+                    <label for="email">Email</label>
+                    <input type="email" id="email" name="email" value="{{ user.email }}" class="form-control">
+                </div>
+
+                <div class="form-group">
+                    <label for="username">Nome de Utilizador</label>
+                    <input type="text" id="username" name="username" value="{{ user.username }}" class="form-control" disabled>
+                    <small>Não pode ser alterado</small>
+                </div>
+            </div>
+
+            <div class="form-section">
+                <h3>Segurança</h3>
+
+                <div class="form-group">
+                    <label for="password">Nova Senha (opcional)</label>
+                    <input type="password" id="password" name="password" placeholder="Deixe em branco para manter a atual" class="form-control">
+                    <small>Mínimo 8 caracteres</small>
+                </div>
+
+                <div class="form-group">
+                    <label for="password_confirm">Confirmar Senha</label>
+                    <input type="password" id="password_confirm" name="password_confirm" placeholder="Confirme a nova senha" class="form-control">
+                </div>
+            </div>
+
+            <div class="form-actions">
+                <button type="submit" class="btn btn-primary">
+                    <i class="fas fa-save"></i> Guardar Alterações
+                </button>
+                <a href="{% url 'painel_admin' %}" class="btn btn-secondary">
+                    <i class="fas fa-times"></i> Cancelar
+                </a>
+            </div>
+        </form>
+    </div>
+
+    <!-- SIDEBAR DE STATS -->
+    <div class="perfil-sidebar">
+        <!-- STATS CARD -->
+        <div class="stats-card">
+            <h3>Atividade</h3>
+            <div class="stat-item">
+                <span class="stat-label">Último Acesso</span>
+                <span class="stat-value">Hoje</span>
+            </div>
+            <div class="stat-item">
+                <span class="stat-label">Conta Criada</span>
+                <span class="stat-value">{{ user.date_joined|date:"d/m/Y" }}</span>
+            </div>
+        </div>
+
+        <!-- SEGURANÇA CARD -->
+        <div class="security-card">
+            <h3>Segurança</h3>
+            <div class="security-item">
+                <i class="fas fa-lock"></i>
+                <div>
+                    <p class="label">Senha</p>
+                    <p class="status">Protegida</p>
+                </div>
+            </div>
+            <div class="security-item">
+                <i class="fas fa-shield-alt"></i>
+                <div>
+                    <p class="label">Autenticação</p>
+                    <p class="status">Ativa</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- AÇÕES RÁPIDAS -->
+        <div class="actions-card">
+            <h3>Ações</h3>
+            <button class="btn-action" onclick="alert('Funcionalidade em desenvolvimento')">
+                <i class="fas fa-history"></i>
+                <span>Ver Histórico</span>
+            </button>
+            <button class="btn-action" onclick="alert('Funcionalidade em desenvolvimento')">
+                <i class="fas fa-download"></i>
+                <span>Exportar Dados</span>
+            </button>
+            <a href="{% url 'logout' %}" class="btn-action danger">
+                <i class="fas fa-sign-out-alt"></i>
+                <span>Terminar Sessão</span>
+            </a>
+        </div>
+    </div>
+</div>
+
+{% endblock %}
+
+{% block extra_js %}
+<script src="{% static 'js/admin_perfil.js' %}"></script>
+{% endblock %}

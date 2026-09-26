@@ -1,0 +1,308 @@
+{% extends 'admin/base_admin.html' %}
+{% load static %}
+
+{% block title %}Agendamentos - Painel Admin{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/admin_agendamentos.css' %}">
+{% endblock %}
+
+{% block content %}
+<div class="container-admin">
+    <!-- ============================================================
+         SEÇÃO 1: CABEÇALHO
+         ============================================================ -->
+    <div class="header-section">
+        <h1>Gestão de Agendamentos</h1>
+        <p>Visualize, confirme e gerencie todos os agendamentos</p>
+    </div>
+
+    <!-- ============================================================
+         SEÇÃO 2: ESTATÍSTICAS
+         ============================================================ -->
+    <div class="stats-container">
+        <div class="stat-card total">
+            <div class="stat-icon">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <rect x="3" y="3" width="7" height="7"></rect>
+                    <rect x="14" y="3" width="7" height="7"></rect>
+                    <rect x="14" y="14" width="7" height="7"></rect>
+                    <rect x="3" y="14" width="7" height="7"></rect>
+                </svg>
+            </div>
+            <div class="stat-content">
+                <h3>Total</h3>
+                <p class="stat-number">{{ total }}</p>
+            </div>
+        </div>
+
+        <div class="stat-card pendente">
+            <div class="stat-icon">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <circle cx="12" cy="12" r="10"></circle>
+                    <polyline points="12 6 12 12 16 14"></polyline>
+                </svg>
+            </div>
+            <div class="stat-content">
+                <h3>Pendentes</h3>
+                <p class="stat-number">{{ pendentes_confirmacao }}</p>
+            </div>
+        </div>
+
+        <div class="stat-card confirmado">
+            <div class="stat-icon">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <polyline points="20 6 9 17 4 12"></polyline>
+                </svg>
+            </div>
+            <div class="stat-content">
+                <h3>Confirmados</h3>
+                <p class="stat-number">{{ confirmados }}</p>
+            </div>
+        </div>
+
+        <div class="stat-card pago">
+            <div class="stat-icon">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <line x1="12" y1="1" x2="12" y2="23"></line>
+                    <path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path>
+                </svg>
+            </div>
+            <div class="stat-content">
+                <h3>Pagos</h3>
+                <p class="stat-number">{{ pagos }}</p>
+            </div>
+        </div>
+
+        <div class="stat-card cancelado">
+            <div class="stat-icon">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <circle cx="12" cy="12" r="10"></circle>
+                    <line x1="15" y1="9" x2="9" y2="15"></line>
+                    <line x1="9" y1="9" x2="15" y2="15"></line>
+                </svg>
+            </div>
+            <div class="stat-content">
+                <h3>Cancelados</h3>
+                <p class="stat-number">{{ cancelados }}</p>
+            </div>
+        </div>
+
+        <div class="stat-card nao-apareceu">
+            <div class="stat-icon">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+                    <circle cx="12" cy="7" r="4"></circle>
+                    <line x1="8" y1="12" x2="16" y2="12"></line>
+                </svg>
+            </div>
+            <div class="stat-content">
+                <h3>Não Apareceu</h3>
+                <p class="stat-number">{{ nao_apareceu }}</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- ============================================================
+         SEÇÃO 3: FILTROS E BUSCA
+         ============================================================ -->
+    <div class="filter-section">
+        <div class="search-box">
+            <input type="text" id="searchInput" placeholder="Buscar por cliente, email ou telefone..." class="search-input">
+        </div>
+
+        <div class="filter-buttons">
+            <h4>Filtrar por Confirmação:</h4>
+            <button class="filter-btn {% if not status_confirmacao_filter %}active{% endif %}" data-filter="confirmacao-todos">Todos</button>
+            <button class="filter-btn" data-filter="confirmacao-pendente">Pendentes</button>
+            <button class="filter-btn" data-filter="confirmacao-confirmado">Confirmados</button>
+            <button class="filter-btn" data-filter="confirmacao-cancelado">Cancelados</button>
+            <button class="filter-btn" data-filter="confirmacao-nao_apareceu">Não Apareceu</button>
+        </div>
+
+        <div class="filter-buttons">
+            <h4>Filtrar por Pagamento:</h4>
+            <button class="filter-btn {% if not status_pagamento_filter %}active{% endif %}" data-filter="pagamento-todos">Todos</button>
+            <button class="filter-btn" data-filter="pagamento-pendente">Pendentes</button>
+            <button class="filter-btn" data-filter="pagamento-pago">Pagos</button>
+        </div>
+    </div>
+
+    <!-- ============================================================
+         SEÇÃO 4: TABELA DE AGENDAMENTOS
+         ============================================================ -->
+    <div class="table-container">
+        {% if agendamentos %}
+            <table class="agendamentos-table">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Cliente</th>
+                        <th>Email</th>
+                        <th>Serviço</th>
+                        <th>Data/Hora</th>
+                        <th>Confirmação</th>
+                        <th>Pagamento</th>
+                        <th>Valor</th>
+                        <th>Ações</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for agendamento in agendamentos %}
+                    <tr class="agendamento-row" data-confirmacao="{{ agendamento.status_confirmacao }}" data-pagamento="{{ agendamento.status_pagamento }}">
+                        <td class="id-cell">#{{ agendamento.id }}</td>
+                        <td class="cliente-cell">{{ agendamento.nome }}</td>
+                        <td class="email-cell">{{ agendamento.email }}</td>
+                        <td class="servico-cell">{{ agendamento.servico.nome }}</td>
+                        <td class="data-cell">
+                            {{ agendamento.data|date:"d/m/Y" }} às {{ agendamento.hora|time:"H:i" }}
+                        </td>
+
+                        <!-- COLUNA: STATUS DE CONFIRMAÇÃO -->
+                        <td class="status-cell">
+                            <span class="status-badge status-{{ agendamento.status_confirmacao }}">
+                                {% if agendamento.status_confirmacao == 'pendente' %}
+                                    Pendente
+                                {% elif agendamento.status_confirmacao == 'confirmado' %}
+                                    Confirmado
+                                {% elif agendamento.status_confirmacao == 'cancelado' %}
+                                    Cancelado
+                                {% elif agendamento.status_confirmacao == 'nao_apareceu' %}
+                                    Não Apareceu
+                                {% endif %}
+                            </span>
+                        </td>
+
+                        <!-- COLUNA: STATUS DE PAGAMENTO -->
+                        <td class="pagamento-cell">
+                            <span class="pagamento-badge pagamento-{{ agendamento.status_pagamento }}">
+                                {% if agendamento.status_pagamento == 'pendente' %}
+                                    Pendente
+                                {% elif agendamento.status_pagamento == 'pago' %}
+                                    Pago
+                                {% endif %}
+                            </span>
+                        </td>
+
+                        <td class="valor-cell">
+                            {% if agendamento.status_pagamento == 'pago' %}
+                                <strong>{{ agendamento.valor_pagamento|floatformat:2 }} kz</strong>
+                            {% else %}
+                                <span class="valor-pendente">{{ agendamento.valor_pagamento|floatformat:2 }} Kz</span>
+                            {% endif %}
+                        </td>
+
+                        <!-- COLUNA: AÇÕES -->
+                        <td class="acoes-cell">
+                            <div class="action-buttons">
+                                <!-- Botão Confirmar (apenas se pendente) -->
+                                {% if agendamento.status_confirmacao == 'pendente' %}
+                                    <form method="post" action="{% url 'confirmar_agendamento' agendamento.id %}" style="display:inline;">
+                                        {% csrf_token %}
+                                        <button type="submit" class="btn btn-confirm" title="Confirmar agendamento">Confirmar</button>
+                                    </form>
+                                {% endif %}
+
+                                <!-- Botões para Confirmado (Cancelar e Não Apareceu) -->
+                                {% if agendamento.status_confirmacao == 'confirmado' %}
+                                    <form method="post" action="{% url 'cancelar_agendamento_admin' agendamento.id %}" style="display:inline;" onsubmit="return confirm('Tem certeza que deseja cancelar este agendamento?')">
+                                        {% csrf_token %}
+                                        <button type="submit" class="btn btn-cancel" title="Cancelar agendamento">Cancelar</button>
+                                    </form>
+                                    <form method="post" action="{% url 'marcar_nao_apareceu' agendamento.id %}" style="display:inline;">
+                                        {% csrf_token %}
+                                        <button type="submit" class="btn btn-nao-apareceu" title="Marcar como não apareceu">Não Apareceu</button>
+                                    </form>
+                                {% endif %}
+
+                                <!-- Botão Marcar Pago (apenas se pagamento pendente) -->
+                                {% if agendamento.status_pagamento == 'pendente' %}
+                                    <form method="post" action="{% url 'marcar_pago' agendamento.id %}" style="display:inline;" onsubmit="return confirm('Confirmar que o pagamento foi recebido presencialmente?')">
+                                        {% csrf_token %}
+                                        <button type="submit" class="btn btn-pago" title="Marcar como pago">Marcar Pago</button>
+                                    </form>
+                                {% endif %}
+
+                                <!-- Botão Ver Detalhes -->
+                                <button class="btn btn-details" onclick="verDetalhes({{ agendamento.id }})" title="Ver detalhes">
+                                    Ver
+                                </button>
+                            </div>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        {% else %}
+            <div class="empty-state">
+                <h3>Nenhum agendamento encontrado</h3>
+                <p>Não há agendamentos para exibir no momento.</p>
+            </div>
+        {% endif %}
+    </div>
+
+    <!-- ============================================================
+         SEÇÃO 5: MODAL DE DETALHES
+         ============================================================ -->
+    <div id="detalhesModal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h2>Detalhes do Agendamento</h2>
+            <div id="detalhesConteudo"></div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}
+
+{% block extra_js %}
+<script>
+    // Filtrar por confirmação
+    document.querySelectorAll('[data-filter^="confirmacao"]').forEach(btn => {
+        btn.addEventListener('click', function() {
+            const filter = this.dataset.filter.replace('confirmacao-', '');
+            const url = new URL(window.location);
+            
+            if (filter === 'todos') {
+                url.searchParams.delete('status_confirmacao');
+            } else {
+                url.searchParams.set('status_confirmacao', filter);
+            }
+            
+            window.location = url.toString();
+        });
+    });
+
+    // Filtrar por pagamento
+    document.querySelectorAll('[data-filter^="pagamento"]').forEach(btn => {
+        btn.addEventListener('click', function() {
+            const filter = this.dataset.filter.replace('pagamento-', '');
+            const url = new URL(window.location);
+            
+            if (filter === 'todos') {
+                url.searchParams.delete('status_pagamento');
+            } else {
+                url.searchParams.set('status_pagamento', filter);
+            }
+            
+            window.location = url.toString();
+        });
+    });
+
+    // Busca em tempo real
+    document.getElementById('searchInput').addEventListener('keyup', function() {
+        const searchTerm = this.value.toLowerCase();
+        const rows = document.querySelectorAll('.agendamento-row');
+        
+        rows.forEach(row => {
+            const text = row.textContent.toLowerCase();
+            row.style.display = text.includes(searchTerm) ? '' : 'none';
+        });
+    });
+
+    // Ver detalhes do agendamento
+    function verDetalhes(id) {
+        alert('Detalhes do agendamento #' + id);
+    }
+</script>
+{% endblock %}

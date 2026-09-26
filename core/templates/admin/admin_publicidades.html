@@ -1,0 +1,72 @@
+{% extends 'admin/base_admin.html' %}
+{% load static %}
+
+{% block title %}Gestão de Publicidades - Oficina Miadas{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/admin_publicidades.css' %}">
+{% endblock %}
+
+{% block content %}
+<div class="publicidades-container">
+    <!-- HEADER -->
+    <div class="page-header">
+        <div>
+            <h1>Gestão de Publicidades</h1>
+            <p class="subtitle">Crie e gerencie as publicidades do sistema</p>
+        </div>
+        <a href="{% url 'criar_publicidade' %}" class="btn btn-primary">
+            <i class="fas fa-plus"></i> Nova Publicidade
+        </a>
+    </div>
+
+    <!-- PUBLICIDADES GRID -->
+    <div class="publicidades-grid">
+        {% if publicidades %}
+            {% for pub in publicidades %}
+            <div class="publicidade-card">
+                <div class="publicidade-image">
+                    {% if pub.imagem %}
+                        <img src="{{ pub.imagem.url }}" alt="{{ pub.titulo }}">
+                    {% else %}
+                        <div class="image-placeholder">
+                            <i class="fas fa-image"></i>
+                        </div>
+                    {% endif %}
+                </div>
+                <div class="publicidade-content">
+                    <h3>{{ pub.titulo }}</h3>
+                    <p class="description">{{ pub.descricao|truncatewords:15 }}</p>
+                    <div class="publicidade-footer">
+                        <span class="status {% if pub.ativa %}active{% else %}inactive{% endif %}">
+                            {% if pub.ativa %}Ativa{% else %}Inativa{% endif %}
+                        </span>
+                    </div>
+                </div>
+                <div class="publicidade-actions">
+                    <a href="{% url 'editar_publicidade' pub.id %}" class="btn-icon">
+                        <i class="fas fa-edit"></i>
+                    </a>
+                    <form method="post" action="{% url 'remover_publicidade' pub.id %}" style="display:inline;" onsubmit="return confirm('Tem a certeza que deseja remover esta publicidade?')">
+                        {% csrf_token %}
+                        <button type="submit" class="btn-icon danger" title="Remover publicidade">
+                            <i class="fas fa-trash"></i>
+                        </button>
+                    </form>
+                </div>
+            </div>
+            {% endfor %}
+        {% else %}
+        <div class="empty-state">
+            <i class="fas fa-bullhorn"></i>
+            <p>Nenhuma publicidade cadastrada</p>
+            <a href="{% url 'criar_publicidade' %}" class="btn btn-primary">Criar Primeira Publicidade</a>
+        </div>
+        {% endif %}
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script src="{% static 'js/admin_publicidades.js' %}"></script>
+{% endblock %}

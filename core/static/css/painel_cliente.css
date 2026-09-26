@@ -1,0 +1,295 @@
+/* ============================================================
+   ARQUIVO: painel_cliente_updated.css
+   DESCRIÇÃO: Estilos adicionais para novos status de agendamentos
+   IDIOMA: Português
+   ============================================================ */
+
+/* ============================================================
+   SEÇÃO 1: STATUS BADGES - NOVOS STATUS
+   ============================================================ */
+
+/* Comentário: Status Expirado */
+.status-badge.status-expirado {
+    background-color: #fff3cd;
+    color: #856404;
+    border: 1px solid #ffeeba;
+    padding: 6px 12px;
+    border-radius: 20px;
+    font-size: 12px;
+    font-weight: 600;
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+}
+
+/* Comentário: Status Atendido */
+.status-badge.status-atendido {
+    background-color: #d4edda;
+    color: #155724;
+    border: 1px solid #c3e6cb;
+    padding: 6px 12px;
+    border-radius: 20px;
+    font-size: 12px;
+    font-weight: 600;
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+}
+
+/* Comentário: Status Não Compareceu */
+.status-badge.status-nao_compareceu {
+    background-color: #f8d7da;
+    color: #721c24;
+    border: 1px solid #f5c6cb;
+    padding: 6px 12px;
+    border-radius: 20px;
+    font-size: 12px;
+    font-weight: 600;
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+}
+
+/* ============================================================
+   SEÇÃO 2: LINHAS DE AGENDAMENTO COM DESTAQUE
+   ============================================================ */
+
+/* Comentário: Destaque para agendamentos expirados */
+.appointment-row[data-status="expirado"] {
+    background-color: #fffbf0;
+    border-left: 4px solid #ffc107;
+}
+
+.appointment-row[data-status="expirado"]:hover {
+    background-color: #fff8e1;
+}
+
+/* Comentário: Destaque para agendamentos atendidos */
+.appointment-row[data-status="atendido"] {
+    background-color: #f0f8f5;
+    border-left: 4px solid #28a745;
+}
+
+.appointment-row[data-status="atendido"]:hover {
+    background-color: #e8f5e9;
+}
+
+/* Comentário: Destaque para agendamentos não comparecidos */
+.appointment-row[data-status="nao_compareceu"] {
+    background-color: #fef5f5;
+    border-left: 4px solid #dc3545;
+}
+
+.appointment-row[data-status="nao_compareceu"]:hover {
+    background-color: #fde8e8;
+}
+
+/* ============================================================
+   SEÇÃO 3: STAT CARDS - NOVOS STATUS
+   ============================================================ */
+
+/* Comentário: Card para agendamentos atendidos */
+.stat-card .stat-icon[style*="4facfe"] {
+    background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%) !important;
+}
+
+/* ============================================================
+   SEÇÃO 4: ANIMAÇÕES
+   ============================================================ */
+
+/* Comentário: Animação de pulsação para agendamentos expirados */
+@keyframes pulse {
+    0%, 100% {
+        opacity: 1;
+    }
+    50% {
+        opacity: 0.8;
+    }
+}
+
+.appointment-row[data-status="expirado"] {
+    animation: pulse 3s ease-in-out infinite;
+}
+
+/* Comentário: Animação de entrada para linhas */
+@keyframes slideInRow {
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.appointment-row {
+    animation: slideInRow 0.3s ease;
+}
+
+/* ============================================================
+   SEÇÃO 5: TRANSIÇÕES SUAVES
+   ============================================================ */
+
+/* Comentário: Transição suave para linhas */
+.appointment-row {
+    transition: all 0.3s ease;
+}
+
+.appointment-row:hover {
+    transform: translateX(5px);
+}
+
+/* Comentário: Transição para badges */
+.status-badge {
+    transition: all 0.3s ease;
+}
+
+.status-badge:hover {
+    transform: scale(1.05);
+}
+
+/* ============================================================
+   SEÇÃO 6: BOTÕES DE AÇÃO
+   ============================================================ */
+
+/* Comentário: Botão de visualizar */
+.btn-icon.btn-view {
+    background-color: #007bff;
+    color: white;
+    border: none;
+    width: 36px;
+    height: 36px;
+    border-radius: 8px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    font-size: 14px;
+}
+
+.btn-icon.btn-view:hover {
+    background-color: #0056b3;
+    transform: translateY(-3px);
+    box-shadow: 0 4px 12px rgba(0, 123, 255, 0.3);
+}
+
+/* Comentário: Botão de editar */
+.btn-icon.btn-edit {
+    background-color: #28a745;
+    color: white;
+    border: none;
+    width: 36px;
+    height: 36px;
+    border-radius: 8px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    font-size: 14px;
+}
+
+.btn-icon.btn-edit:hover {
+    background-color: #218838;
+    transform: translateY(-3px);
+    box-shadow: 0 4px 12px rgba(40, 167, 69, 0.3);
+}
+
+/* ============================================================
+   SEÇÃO 7: RESPONSIVIDADE
+   ============================================================ */
+
+@media (max-width: 768px) {
+    /* Comentário: Ajustar botões em telas pequenas */
+    .btn-icon {
+        width: 32px;
+        height: 32px;
+        font-size: 12px;
+    }
+
+    /* Comentário: Ajustar status badges */
+    .status-badge {
+        font-size: 11px;
+        padding: 5px 10px;
+    }
+
+    /* Comentário: Ajustar tabela */
+    .appointments-table {
+        font-size: 12px;
+    }
+
+    .appointments-table th,
+    .appointments-table td {
+        padding: 10px;
+    }
+}
+
+@media (max-width: 480px) {
+    /* Comentário: Ajustar para mobile */
+    .btn-icon {
+        width: 28px;
+        height: 28px;
+        font-size: 10px;
+    }
+
+    .status-badge {
+        font-size: 10px;
+        padding: 4px 8px;
+    }
+
+    .appointments-table {
+        font-size: 10px;
+    }
+
+    .appointments-table th,
+    .appointments-table td {
+        padding: 8px;
+    }
+
+    /* Comentário: Ocultar colunas em mobile */
+    .appointments-table th:nth-child(2),
+    .appointments-table td:nth-child(2) {
+        display: none;
+    }
+}
+
+/* ============================================================
+   SEÇÃO 8: EFEITOS ESPECIAIS
+   ============================================================ */
+
+/* Comentário: Efeito ripple ao clicar */
+@keyframes ripple {
+    0% {
+        transform: scale(0);
+        opacity: 1;
+    }
+    100% {
+        transform: scale(4);
+        opacity: 0;
+    }
+}
+
+.ripple {
+    position: absolute;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.6);
+    transform: scale(0);
+    animation: ripple 0.6s ease-out;
+    pointer-events: none;
+}
+
+/* ============================================================
+   SEÇÃO 9: CORES E GRADIENTES
+   ============================================================ */
+
+/* Comentário: Gradiente para stat cards */
+.stat-card {
+    background: linear-gradient(135deg, #ffffff 0%, #f8f9fa 100%);
+    border: 1px solid #e9ecef;
+}
+
+.stat-card:hover {
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+}

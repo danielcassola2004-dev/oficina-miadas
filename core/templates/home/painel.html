@@ -1,0 +1,265 @@
+{% extends 'home/base_cliente.html' %}
+{% load static %}
+
+{% block title %}Dashboard - Oficina Miadas{% endblock %}
+{% block page_title %}Dashboard{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/home_cliente.css' %}">
+{% endblock %}
+
+{% block content %}
+<div class="dashboard">
+    <!-- WELCOME CARD COM IMAGEM DINÂMICA -->
+    <div class="welcome-card">
+        <!-- Carrossel de Imagens de Serviços -->
+        <div class="welcome-carousel">
+            <div class="carousel-container">
+                    <!-- Imagem 2: Reparação -->
+                    <div class="carousel-slide" data-service="reparacao">
+                        <img src="https://images.unsplash.com/photo-1486312338219-ce68d2c6f44d?w=1200&h=400&fit=crop" alt="Reparação">
+                        <div class="carousel-overlay"></div>
+                    </div>
+                    
+                    <!-- Imagem 3: Inspeção -->
+                    <div class="carousel-slide" data-service="inspecao">
+                        <img src="https://images.unsplash.com/photo-1552664730-d307ca884978?w=1200&h=400&fit=crop" alt="Inspeção Técnica">
+                        <div class="carousel-overlay"></div>
+                    </div>
+                    
+                    <!-- Imagem 4: Limpeza -->
+                    <div class="carousel-slide" data-service="limpeza">
+                        <img src="https://images.unsplash.com/photo-1581092918056-0c4c3acd3789?w=1200&h=400&fit=crop" alt="Limpeza Profissional">
+                        <div class="carousel-overlay"></div>
+                    </div>
+                </div>
+                
+                <!-- Indicadores do Carrossel -->
+                <div class="carousel-indicators">
+                    <button class="indicator active" data-slide="0"></button>
+                    <button class="indicator" data-slide="1"></button>
+                    <button class="indicator" data-slide="2"></button>
+                    <button class="indicator" data-slide="3"></button>
+                </div>   
+            </div>
+            
+            <!-- Conteúdo Sobreposto -->
+            <div class="welcome-content">
+                <h1>Bem-vindo, <span>{{ user.first_name|default:user.username }}</span></h1>
+                <p>Aqui está um resumo dos seus agendamentos e atividades</p>
+                <a href="{% url 'agendar' %}" class="btn btn-primary btn-lg">
+                    <i class="fas fa-plus"></i> Novo Agendamento
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <!-- STATS GRID COM ANIMAÇÕES -->
+    <div class="stats-grid">
+        <div class="stat-card" style="--delay: 0.1s;">
+            <div class="stat-header">
+                <div class="stat-icon" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);">
+                    <i class="fas fa-calendar-check"></i>
+                </div>
+                <div class="stat-title">
+                    <p>Total de Agendamentos</p>
+                </div>
+            </div>
+            <div class="stat-value">{{ total_agendamentos }}</div>
+            <div class="stat-bar"></div>
+        </div>
+
+        <div class="stat-card" style="--delay: 0.2s;">
+            <div class="stat-header">
+                <div class="stat-icon" style="background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);">
+                    <i class="fas fa-check-circle"></i>
+                </div>
+                <div class="stat-title">
+                    <p>Confirmados</p>
+                </div>
+            </div>
+            <div class="stat-value">{{ confirmados }}</div>
+            <div class="stat-bar"></div>
+        </div>
+
+        <div class="stat-card" style="--delay: 0.3s;">
+            <div class="stat-header">
+                <div class="stat-icon" style="background: linear-gradient(135deg, #fa709a 0%, #fee140 100%);">
+                    <i class="fas fa-hourglass-half"></i>
+                </div>
+                <div class="stat-title">
+                    <p>Pendentes</p>
+                </div>
+            </div>
+            <div class="stat-value">{{ pendentes }}</div>
+            <div class="stat-bar"></div>
+        </div>
+
+        <div class="stat-card" style="--delay: 0.4s;">
+            <div class="stat-header">
+                <div class="stat-icon" style="background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);">
+                    <i class="fas fa-times-circle"></i>
+                </div>
+                <div class="stat-title">
+                    <p>Cancelados</p>
+                </div>
+            </div>
+            <div class="stat-value">{{ cancelados }}</div>
+            <div class="stat-bar"></div>
+        </div>
+    </div>
+
+    <!-- PRÓXIMOS AGENDAMENTOS COM DESIGN MELHORADO -->
+    <div class="section">
+        <div class="section-header">
+            <div class="section-title-group">
+                <h2><i class="fas fa-calendar-alt"></i>  Agendamentos Recentes</h2>
+                <span class="section-subtitle">Gerencie seus compromissos</span>
+            </div>
+            <a href="{% url 'meus_agendamentos' %}" class="link-more">
+                Ver Todos <i class="fas fa-arrow-right"></i>
+            </a>
+        </div>
+
+        {% if agendamentos %}
+        <div class="appointments-table-container">
+            <table class="appointments-table">
+                <thead>
+                    <tr>
+                        <th><i class="fas fa-tools"></i> Serviço</th>
+                        <th><i class="fas fa-calendar"></i> Data</th>
+                        <th><i class="fas fa-clock"></i> Hora</th>
+                        <th><i class="fas fa-flag"></i> Status</th>
+                        <th><i class="fas fa-cog"></i> Ação</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for agendamento in agendamentos|slice:":5" %}
+                    <tr class="appointment-row" data-status="{{ agendamento.status_confirmacao }}" data-id="{{ agendamento.id }}">
+                        <td class="service-name">
+                            <div class="service-badge">
+                                <i class="fas fa-wrench"></i>
+                            </div>
+                            <strong>{{ agendamento.servico.nome }}</strong>
+                        </td>
+                        <td class="appointment-date">
+                            <span class="date-badge">{{ agendamento.data|date:"d/m/Y" }}</span>
+                        </td>
+                        <td class="appointment-time">
+                            <span class="time-badge">{{ agendamento.hora }}</span>
+                        </td>
+                        <td>
+                            <span class="status-badge status-{{ agendamento.status_confirmacao }}">
+                                {% if agendamento.status_confirmacao == 'pendente' %}
+                                    <i class="fas fa-hourglass-half"></i> Pendente
+                                {% elif agendamento.status_confirmacao == 'confirmado' %}
+                                    <i class="fas fa-check-circle"></i> Confirmado
+                                {% elif agendamento.status_confirmacao == 'cancelado' %}
+                                    <i class="fas fa-times-circle"></i> Cancelado
+                                {% endif %}
+                            </span>
+                        </td>
+                        <td>
+                            <div class="action-buttons">
+                                <a href="{% url 'meus_agendamentos' %}" class="btn-icon btn-view" title="Ver Detalhes">
+                                    <i class="fas fa-eye"></i>
+                                </a>
+                                <button class="btn-icon btn-edit" title="Editar">
+                                    <i class="fas fa-edit"></i>
+                                </button>
+                            </div>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+        {% else %}
+        <div class="empty-state">
+            <div class="empty-icon">
+                <i class="fas fa-calendar-times"></i>
+            </div>
+            <h3>Nenhum agendamento ainda</h3>
+            <p>Comece agora a agendar um serviço na nossa oficina</p>
+            <a href="{% url 'agendar' %}" class="btn btn-primary">
+                <i class="fas fa-plus"></i> Agendar Agora
+            </a>
+        </div>
+        {% endif %}
+    </div>
+
+    <!-- GRID 2 COLUNAS COM DESIGN MELHORADO -->
+    <div class="grid-2">
+        <!-- PROMOÇÕES COM IMAGENS DINÂMICAS -->
+        {% if publicidades %}
+        <div class="section">
+            <div class="section-header">
+                <div class="section-title-group">
+                    <h2><i class="fas fa-star"></i> Promoções</h2>
+                    <span class="section-subtitle">Ofertas especiais</span>
+                </div>
+            </div>
+            <div class="promotions-list">
+                {% for pub in publicidades|slice:":3" %}
+                <div class="promotion-item" style="--delay: {{ forloop.counter|add:0.1 }}s;">
+                    <div class="promo-header">
+                        <div class="promo-icon">
+                            <i class="fas fa-star"></i>
+                        </div>
+                        <span class="promo-badge">Promoção</span>
+                    </div>
+                    <div class="promo-content">
+                        <h4>{{ pub.titulo }}</h4>
+                        <p>{{ pub.descricao|truncatewords:10 }}</p>
+                    </div>
+                    <a href="{% url 'agendar' %}" class="promo-link">
+                        Aproveitar <i class="fas fa-arrow-right"></i>
+                    </a>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+        {% endif %}
+
+        <!-- AÇÕES RÁPIDAS -->
+        <div class="section">
+            <div class="section-header">
+                <div class="section-title-group">
+                    <h2><i class="fas fa-bolt"></i> Ações Rápidas</h2>
+                    <span class="section-subtitle">Acesso direto</span>
+                </div>
+            </div>
+            <div class="quick-actions">
+                <a href="{% url 'agendar' %}" class="quick-action" style="--delay: 0.1s;">
+                    <div class="quick-action-icon">
+                        <i class="fas fa-plus-circle"></i>
+                    </div>
+                    <span>Novo Agendamento</span>
+                </a>
+                <a href="{% url 'servicos' %}" class="quick-action" style="--delay: 0.2s;">
+                    <div class="quick-action-icon">
+                        <i class="fas fa-tools"></i>
+                    </div>
+                    <span>Ver Serviços</span>
+                </a>
+                <a href="{% url 'perfil' %}" class="quick-action" style="--delay: 0.3s;">
+                    <div class="quick-action-icon">
+                        <i class="fas fa-user-edit"></i>
+                    </div>
+                    <span>Editar Perfil</span>
+                </a>
+                <a href="{% url 'publicidades' %}" class="quick-action" style="--delay: 0.4s;">
+                    <div class="quick-action-icon">
+                        <i class="fas fa-bullhorn"></i>
+                    </div>
+                    <span>Ver Promoções</span>
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script src="{% static 'js/dashboard.js' %}"></script>
+{% endblock %}

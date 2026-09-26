@@ -1,0 +1,136 @@
+{% extends 'home/base_cliente.html' %}
+{% load static %}
+
+{% block title %}Configurações - Oficina Miadas{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/configuracoes.css' %}">
+{% endblock %}
+
+{% block content %}
+<div class="configuracoes-wrapper">
+    <div class="configuracoes-container">
+        <!-- HEADER -->
+        <div class="page-header">
+            <h1><i class="fas fa-cog"></i> Configurações</h1>
+            <p>Gerencie suas preferências</p>
+        </div>
+
+        <!-- TABS -->
+        <div class="tabs">
+            <button class="tab-btn active" data-tab="notificacoes">
+                <i class="fas fa-bell"></i> Notificações
+            </button>
+            <button class="tab-btn" data-tab="privacidade">
+                <i class="fas fa-lock"></i> Privacidade
+            </button>
+            <button class="tab-btn" data-tab="seguranca">
+                <i class="fas fa-shield-alt"></i> Segurança
+            </button>
+        </div>
+
+        <!-- TAB CONTENT -->
+        <div class="tabs-content">
+            <!-- NOTIFICAÇÕES -->
+            <div class="tab-content active" id="notificacoes">
+                <h2>Preferências de Notificações</h2>
+                <form method="POST" class="settings-form">
+                    {% csrf_token %}
+                    
+                    <div class="setting-item">
+                        <div class="setting-info">
+                            <h4>Notificações por Email</h4>
+                            <p>Receba notificações sobre seus agendamentos</p>
+                        </div>
+                        <label class="toggle">
+                            <input type="checkbox" checked>
+                            <span class="toggle-slider"></span>
+                        </label>
+                    </div>
+
+                    <div class="setting-item">
+                        <div class="setting-info">
+                            <h4>Notificações de Promoções</h4>
+                            <p>Receba informações sobre nossas promoções</p>
+                        </div>
+                        <label class="toggle">
+                            <input type="checkbox" checked>
+                            <span class="toggle-slider"></span>
+                        </label>
+                    </div>
+
+                    <button type="submit" class="btn btn-primary">
+                        <i class="fas fa-save"></i> Guardar
+                    </button>
+                </form>
+            </div>
+
+            <!-- PRIVACIDADE -->
+            <div class="tab-content" id="privacidade">
+                <h2>Configurações de Privacidade</h2>
+                <form method="POST" class="settings-form">
+                    {% csrf_token %}
+                    
+                    <div class="setting-item">
+                        <div class="setting-info">
+                            <h4>Perfil Público</h4>
+                            <p>Permitir que outros vejam seu perfil</p>
+                        </div>
+                        <label class="toggle">
+                            <input type="checkbox">
+                            <span class="toggle-slider"></span>
+                        </label>
+                    </div>
+
+                    <div class="setting-item">
+                        <div class="setting-info">
+                            <h4>Mostrar Histórico</h4>
+                            <p>Mostrar seu histórico de agendamentos</p>
+                        </div>
+                        <label class="toggle">
+                            <input type="checkbox">
+                            <span class="toggle-slider"></span>
+                        </label>
+                    </div>
+
+                    <button type="submit" class="btn btn-primary">
+                        <i class="fas fa-save"></i> Guardar
+                    </button>
+                </form>
+            </div>
+
+            <!-- SEGURANÇA -->
+            <div class="tab-content" id="seguranca">
+                <h2>Segurança da Conta</h2>
+                <form method="POST" class="settings-form">
+                    {% csrf_token %}
+                    
+                    <div class="setting-group">
+                        <h4>Alterar Palavra-passe</h4>
+                        <div class="form-group">
+                            <label>Palavra-passe Atual</label>
+                            <input type="password" name="current_password" required>
+                        </div>
+                        <div class="form-group">
+                            <label>Nova Palavra-passe</label>
+                            <input type="password" name="new_password" required>
+                        </div>
+                        <div class="form-group">
+                            <label>Confirmar Palavra-passe</label>
+                            <input type="password" name="confirm_password" required>
+                        </div>
+                    </div>
+
+                    <button type="submit" class="btn btn-primary">
+                        <i class="fas fa-lock"></i> Alterar Palavra-passe
+                    </button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script src="{% static 'js/configuracoes.js' %}"></script>
+{% endblock %}

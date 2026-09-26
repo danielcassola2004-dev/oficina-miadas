@@ -1,0 +1,134 @@
+{% extends 'admin/base_admin.html' %}
+{% load static %}
+
+{% block title %}{% if form.instance.pk %}Editar{% else %}Criar{% endif %} Publicidade - Admin{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/formularios.css' %}">
+{% endblock %}
+
+{% block content %}
+<div class="page-header">
+    <div>
+        <h1>{% if form.instance.pk %}Editar Publicidade{% else %}Criar Nova Publicidade{% endif %}</h1>
+        <p class="subtitle">Preencha os detalhes da publicidade</p>
+    </div>
+</div>
+
+<!-- FORM CONTAINER -->
+<div class="form-container">
+    <div class="form-card">
+        <form method="POST" enctype="multipart/form-data" class="form-main">
+            {% csrf_token %}
+
+            <!-- INFORMAÇÕES BÁSICAS -->
+            <div class="form-section">
+                <h2>Informações Básicas</h2>
+
+                <div class="form-group">
+                    <label for="titulo">Título da Publicidade *</label>
+                    <input type="text" id="titulo" name="titulo" value="{{ form.instance.titulo }}" 
+                           class="form-control" placeholder="Ex: Promoção de Verão" required>
+                    <small>Máximo 200 caracteres</small>
+                </div>
+
+                <div class="form-group">
+                    <label for="descricao">Descrição</label>
+                    <textarea id="descricao" name="descricao" rows="5" 
+                              class="form-control" placeholder="Descreva a publicidade...">{{ form.instance.descricao }}</textarea>
+                    <small>Máximo 1000 caracteres</small>
+                </div>
+
+                <div class="form-group">
+                    <label for="ativa">Status</label>
+                    <div class="checkbox-group">
+                        <input type="checkbox" id="ativa" name="ativa" 
+                               {% if form.instance.ativa %}checked{% endif %} class="checkbox-input">
+                        <label for="ativa" class="checkbox-label">Publicidade Ativa</label>
+                    </div>
+                </div>
+            </div>
+
+            <!-- IMAGEM -->
+            <div class="form-section">
+                <h2>Imagem da Publicidade</h2>
+
+                <div class="form-group">
+                    <label for="imagem">Imagem *</label>
+                    
+                    {% if form.instance.imagem %}
+                    <div class="image-preview">
+                        <img src="{{ form.instance.imagem.url }}" alt="Preview">
+                        <button type="button" class="btn-remove-image" onclick="removeImage()">
+                            <i class="fas fa-trash"></i> Remover
+                        </button>
+                    </div>
+                    {% endif %}
+
+                    <div class="file-upload">
+                        <input type="file" id="imagem" name="imagem" accept="image/*" class="file-input" required>
+                        <label for="imagem" class="file-label">
+                            <i class="fas fa-cloud-upload-alt"></i>
+                            <span>Clique para selecionar ou arraste a imagem</span>
+                        </label>
+                    </div>
+                    <small>Formatos aceitos: JPG, PNG, GIF (Máximo 5MB)</small>
+                </div>
+            </div>
+
+            <!-- FORM ACTIONS -->
+            <div class="form-actions">
+                <button type="submit" class="btn btn-primary btn-lg">
+                    <i class="fas fa-save"></i> 
+                    {% if form.instance.pk %}Atualizar Publicidade{% else %}Criar Publicidade{% endif %}
+                </button>
+                <a href="{% url 'admin_publicidades' %}" class="btn btn-secondary btn-lg">
+                    <i class="fas fa-times"></i> Cancelar
+                </a>
+            </div>
+        </form>
+    </div>
+
+    <!-- SIDEBAR COM INFORMAÇÕES -->
+    <div class="form-sidebar">
+        <div class="info-card">
+            <h3>Dicas</h3>
+            <ul class="tips-list">
+                <li>Use um título atrativo e claro</li>
+                <li>Descreva a promoção ou oferta</li>
+                <li>Adicione uma imagem de alta qualidade</li>
+                <li>Ative a publicidade para aparecer aos clientes</li>
+                <li>Atualize regularmente</li>
+            </ul>
+        </div>
+
+        <div class="info-card">
+            <h3>Recomendações de Imagem</h3>
+            <p>Para melhor resultado:</p>
+            <ul class="tips-list">
+                <li>Resolução: 1200x600px ou superior</li>
+                <li>Formato: JPG ou PNG</li>
+                <li>Tamanho: Até 5MB</li>
+                <li>Proporção: 2:1 (largura:altura)</li>
+                <li>Imagem clara e atrativa</li>
+            </ul>
+        </div>
+
+        <div class="info-card">
+            <h3>Informações</h3>
+            <p><strong>Criada em:</strong> 
+                {% if form.instance.criado_em %}
+                    {{ form.instance.criado_em|date:"d/m/Y H:i" }}
+                {% else %}
+                    Novo registro
+                {% endif %}
+            </p>
+        </div>
+    </div>
+</div>
+
+{% endblock %}
+
+{% block extra_js %}
+<script src="{% static 'js/formulario.js' %}"></script>
+{% endblock %}

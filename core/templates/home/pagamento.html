@@ -1,0 +1,77 @@
+{% extends 'home/base_cliente.html' %}
+{% load static %}
+
+{% block title %}Pagamento presencial - Oficina Miadas{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/pagamento.css' %}">
+{% endblock %}
+
+{% block content %}
+<div class="container-pagamento">
+    <div class="header-pagamento">
+        <h1>Pagamento do Agendamento</h1>
+        <p>O pagamento da Oficina Miadas é realizado presencialmente na oficina.</p>
+    </div>
+
+    <div class="pagamento-wrapper">
+        <div class="resumo-agendamento">
+            <h2>Resumo do Agendamento</h2>
+            <div class="resumo-item"><span class="label">Serviço:</span><span class="valor">{{ agendamento.servico.nome }}</span></div>
+            <div class="resumo-item"><span class="label">Data:</span><span class="valor">{{ agendamento.data|date:"d/m/Y" }}</span></div>
+            <div class="resumo-item"><span class="label">Hora:</span><span class="valor">{{ agendamento.hora|time:"H:i" }}</span></div>
+            <div class="resumo-item"><span class="label">Cliente:</span><span class="valor">{{ agendamento.nome }}</span></div>
+            <div class="resumo-item"><span class="label">Telefone:</span><span class="valor">{{ agendamento.telefone }}</span></div>
+            {% if agendamento.observacoes %}
+            <div class="resumo-item"><span class="label">Observações:</span><span class="valor">{{ agendamento.observacoes }}</span></div>
+            {% endif %}
+            <div class="resumo-divider"></div>
+            <div class="resumo-total">
+                <span class="label">Valor:</span>
+                <span class="valor-total">{{ agendamento.valor_pagamento|floatformat:2 }} Kz</span>
+            </div>
+        </div>
+
+        <div class="metodos-pagamento">
+            <h2>Método de Pagamento</h2>
+
+            <form id="formPagamento" method="post">
+                {% csrf_token %}
+                <div class="metodo-card">
+                    <input type="radio" id="presencial" name="metodo_pagamento" value="presencial" checked>
+                    <label for="presencial" class="metodo-label">
+                        <div class="metodo-icon"><i class="fas fa-money-bill-wave"></i></div>
+                        <div class="metodo-info">
+                            <h3>Pagamento Presencial</h3>
+                            <p>O pagamento será feito diretamente na Oficina Miadas.</p>
+                        </div>
+                    </label>
+                </div>
+
+                <div class="info-pagamento">
+                    <h4>Como funciona?</h4>
+                    <ul>
+                        <li>Compareça à oficina na data e hora do agendamento.</li>
+                        <li>O valor será confirmado pela oficina.</li>
+                        <li>Depois do pagamento, o administrador marcará o agendamento como <strong>Pago</strong>.</li>
+                    </ul>
+                </div>
+
+                <div class="termos-checkbox">
+                    <input type="checkbox" id="aceitar_termos" name="aceitar_termos" value="1" required>
+                    <label for="aceitar_termos">Confirmo que farei o pagamento presencialmente na oficina.</label>
+                </div>
+
+                <div class="acoes-pagamento">
+                    <button type="button" class="btn btn-cancelar" onclick="window.history.back()">Voltar</button>
+                    <button type="submit" class="btn btn-confirmar">Confirmar pagamento presencial</button>
+                </div>
+            </form>
+
+            <div class="info-seguranca">
+                <p><i class="fas fa-lock"></i> Nenhum pagamento online é processado por este sistema.</p>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

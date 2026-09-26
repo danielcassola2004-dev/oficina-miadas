@@ -1,0 +1,49 @@
+{% extends 'home/base_cliente.html' %}
+{% load static %}
+
+{% block title %}Serviços - Oficina Miadas{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/servicos.css' %}">
+{% endblock %}
+
+{% block content %}
+<div class="servicos-container">
+    <div class="page-header">
+        <h1><i class="fas fa-tools"></i> Nossos Serviços</h1>
+        <p>Conheça todos os serviços que oferecemos</p>
+    </div>
+
+    {% if servicos %}
+    <div class="servicos-grid">
+        {% for servico in servicos %}
+        <div class="servico-card">
+            <div class="servico-icon">
+                  <img src="{{ servico.imagem.url }}" alt="{{ servico.nome }}">
+            </div>
+            <h3>{{ servico.nome }}</h3>
+            <p>{{ servico.descricao|truncatewords:20 }}</p>
+            <div class="servico-footer">
+               
+
+                </span>
+                <span class="preco">{{ servico.preco }}kz</span>
+                <a href="{% url 'agendar' %}?servico={{ servico.id }}" class="btn btn-small">
+                    Agendar
+                </a>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+    {% else %}
+    <div class="empty-state">
+        <i class="fas fa-inbox"></i>
+        <p>Nenhum serviço disponível</p>
+    </div>
+    {% endif %}
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script src="{% static 'js/servicos.js' %}"></script>
+{% endblock %}

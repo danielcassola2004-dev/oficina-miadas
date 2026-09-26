@@ -1,0 +1,27 @@
+{% extends 'home/base_cliente.html' %}
+{% load static %}
+
+{% block title %}Pagamento presencial registado - Oficina Miadas{% endblock %}
+
+{% block content %}
+<div class="container-pagamento">
+    <div class="header-pagamento">
+        <h1>Pagamento presencial registado</h1>
+        <p>O pagamento ainda não foi realizado. Ele será confirmado pela oficina após o pagamento no local.</p>
+    </div>
+
+    <div class="resumo-agendamento">
+        <h2>Agendamento</h2>
+        <div class="resumo-item"><span class="label">Serviço:</span><span class="valor">{{ agendamento.servico.nome }}</span></div>
+        <div class="resumo-item"><span class="label">Data:</span><span class="valor">{{ agendamento.data|date:"d/m/Y" }}</span></div>
+        <div class="resumo-item"><span class="label">Hora:</span><span class="valor">{{ agendamento.hora|time:"H:i" }}</span></div>
+        <div class="resumo-item"><span class="label">Valor:</span><span class="valor">{{ valor|floatformat:2 }} Kz</span></div>
+        <div class="resumo-item"><span class="label">Pagamento:</span><span class="valor">Pendente — presencial</span></div>
+    </div>
+
+    <div class="acoes-pagamento">
+        <a href="{% url 'meus_agendamentos' %}" class="btn btn-confirmar">Ver meus agendamentos</a>
+        <a href="{% url 'home' %}" class="btn btn-cancelar">Voltar ao início</a>
+    </div>
+</div>
+{% endblock %}

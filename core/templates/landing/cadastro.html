@@ -1,0 +1,210 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+    <meta charset="UTF-8">
+    <title>Cadastro | Oficina Miadas</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&family=Poppins:wght@300;500;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+
+    <link rel="stylesheet" href="{% static 'css/auth.css' %}">
+    <link rel="stylesheet" href="{% static 'css/cadastro.css' %}">
+</head>
+
+<body>
+
+<div class="auth-bg">
+    <div class="auth-overlay"></div>
+</div>
+
+<a href="/" class="back-home">
+    <i class="fas fa-arrow-left"></i> Voltar ao Início
+</a>
+
+<div class="auth-container" data-aos="fade-up">
+
+    <div class="auth-logo">
+        <img src="{% static 'images/logo.png' %}" alt="Logo">
+    </div>
+
+    <h2>Criar Conta</h2>
+    <p class="subtitle">Crie sua conta para usar a Oficina Miadas</p>
+
+    {% if messages %}
+        <ul class="messages">
+            {% for message in messages %}
+                <li class="message {{ message.tags }}">
+                    <i class="fas fa-info-circle"></i>
+                    {{ message }}
+                </li>
+            {% endfor %}
+        </ul>
+    {% endif %}
+
+    <form method="POST" class="auth-form" id="formCadastro">
+        {% csrf_token %}
+
+        <!-- USERNAME -->
+        <div class="form-group">
+            <label>Nome de Utilizador</label>
+
+            <input
+                type="text"
+                name="username"
+                id="username"
+                placeholder="Ex: dany123"
+                minlength="3"
+                maxlength="20"
+                required
+                pattern="^(?=.*[a-zA-Z])[a-zA-Z0-9_-]+$"
+                title="Deve conter letras (não pode ser só números)"
+                class="form-input"
+            >
+
+            <small>Apenas letras, números, _ e - (não pode ser só números)</small>
+
+            <div id="usernameError" class="validation-feedback"></div>
+        </div>
+
+        <!-- EMAIL -->
+        <div class="form-group">
+            <label>Email</label>
+
+            <input
+                type="email"
+                name="email"
+                placeholder="exemplo@email.com"
+                required
+                class="form-input"
+            >
+        </div>
+
+        <!-- PASSWORD -->
+        <div class="form-group">
+            <label>Password</label>
+
+            <input
+                type="password"
+                name="password1"
+                id="password1"
+                required
+                minlength="8"
+                class="form-input"
+                placeholder="Mínimo 8 caracteres"
+            >
+        </div>
+
+        <!-- CONFIRM PASSWORD -->
+        <div class="form-group">
+            <label>Confirmar Password</label>
+
+            <input
+                type="password"
+                name="password2"
+                id="password2"
+                required
+                class="form-input"
+            >
+
+            <div id="passMsg"></div>
+        </div>
+
+        <!-- TERMOS -->
+        <div class="form-group checkbox">
+            <input type="checkbox" name="termos_uso" id="termos" required>
+            <label for="termos">
+                Aceito os termos e condições
+            </label>
+        </div>
+
+        <button type="submit" class="btn-submit">
+            Criar Conta
+        </button>
+
+    </form>
+
+</div>
+
+<script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+<script>
+AOS.init();
+
+/* =========================
+   VALIDAR USERNAME
+========================= */
+function validarUsername() {
+    const username = document.getElementById("username").value;
+    const error = document.getElementById("usernameError");
+
+    const temLetra = /[a-zA-Z]/.test(username);
+    const soNumeros = /^[0-9]+$/.test(username);
+
+    if (soNumeros) {
+        error.innerHTML = "❌ Não pode ser apenas números";
+        return false;
+    }
+
+    if (!temLetra) {
+        error.innerHTML = "❌ Deve conter pelo menos uma letra";
+        return false;
+    }
+
+    error.innerHTML = "";
+    return true;
+}
+
+/* =========================
+   SENHAS IGUAIS
+========================= */
+function validarSenhas() {
+    const p1 = document.getElementById("password1").value;
+    const p2 = document.getElementById("password2").value;
+    const msg = document.getElementById("passMsg");
+
+    if (p2 === "") {
+        msg.innerHTML = "";
+        return false;
+    }
+
+    if (p1 === p2) {
+        msg.innerHTML = "✔ Senhas iguais";
+        msg.style.color = "green";
+        return true;
+    } else {
+        msg.innerHTML = "❌ Senhas diferentes";
+        msg.style.color = "red";
+        return false;
+    }
+}
+
+/* =========================
+   EVENTOS
+========================= */
+document.getElementById("username").addEventListener("input", validarUsername);
+document.getElementById("password2").addEventListener("input", validarSenhas);
+
+/* =========================
+   SUBMIT VALIDATION
+========================= */
+document.getElementById("formCadastro").addEventListener("submit", function(e) {
+
+    if (!validarUsername()) {
+        e.preventDefault();
+        alert("Corrige o nome de utilizador");
+        return;
+    }
+
+    if (!validarSenhas()) {
+        e.preventDefault();
+        alert("As senhas não coincidem");
+        return;
+    }
+
+});
+</script>
+
+</body>
+</html>

@@ -1,0 +1,345 @@
+/* 
+    Oficina Miadas - Unified Auth CSS for TCC
+    Author: Manus AI
+    Focus: Glassmorphism, Premium Inputs, Modern Typography
+    Used for: login.html and cadastro.html
+    CORRIGIDO FINAL: Inputs com classe .form-input
+*/
+
+:root {
+    /* Comentário: Cores primárias da marca */
+    --primary: #ff6b00; /* Laranja vibrante automotivo */
+    --primary-dark: #e65a00;
+    --secondary: #1a1a1a;
+    --white: #ffffff;
+    --glass: rgba(255, 255, 255, 0.05);
+    --glass-border: rgba(255, 255, 255, 0.1);
+    --glass-blur: blur(15px);
+    --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    --shadow: 0 25px 50px rgba(0, 0, 0, 0.3);
+}
+
+/* RESET & BASE */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Inter', 'Segoe UI', sans-serif;
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow-x: hidden;
+    background-color: #000;
+    padding: 20px;
+}
+
+/* BACKGROUND DINÂMICO */
+.auth-bg {
+    position: fixed;
+    inset: 0;
+    z-index: -1;
+}
+
+.auth-bg video {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    opacity: 0.6;
+}
+
+.auth-bg::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: url("/static/images/pecas_com_logo.png") center/cover no-repeat;
+    filter: brightness(0.4);
+    z-index: -2;
+}
+
+.auth-overlay {
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(circle, rgba(0,0,0,0.3) 0%, rgba(0,0,0,0.8) 100%);
+    z-index: -1;
+}
+
+/* VOLTAR PARA HOME */
+.back-home {
+    position: absolute;
+    top: 30px;
+    left: 30px;
+    color: var(--white);
+    text-decoration: none;
+    font-size: 14px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    opacity: 0.7;
+    transition: var(--transition);
+    z-index: 100;
+}
+
+.back-home:hover { 
+    opacity: 1; 
+    transform: translateX(-5px); 
+}
+
+/* CONTAINER DO FORMULÁRIO (GLASSMORPHISM) */
+.auth-container {
+    background: var(--glass);
+    backdrop-filter: var(--glass-blur);
+    -webkit-backdrop-filter: var(--glass-blur);
+    border: 1px solid var(--glass-border);
+    padding: 40px 30px;
+    border-radius: 24px;
+    width: 100%;
+    max-width: 450px;
+    max-height: 90vh;
+    overflow-y: auto;
+    box-shadow: var(--shadow);
+    text-align: center;
+    color: var(--white);
+    scrollbar-width: thin;
+    scrollbar-color: rgba(255,255,255,0.1) transparent;
+    animation: authFadeIn 0.6s ease-out;
+}
+
+@keyframes authFadeIn {
+    from { 
+        opacity: 0; 
+        transform: translateY(20px); 
+    }
+    to { 
+        opacity: 1; 
+        transform: translateY(0); 
+    }
+}
+
+/* Comentário: Scrollbar customizada */
+.auth-container::-webkit-scrollbar { 
+    width: 6px; 
+}
+
+.auth-container::-webkit-scrollbar-track { 
+    background: transparent; 
+}
+
+.auth-container::-webkit-scrollbar-thumb { 
+    background: rgba(255,255,255,0.1); 
+    border-radius: 10px; 
+}
+
+/* LOGO */
+.auth-logo { 
+    margin-bottom: 20px; 
+}
+
+.auth-logo img {
+    width: 80px;
+    height: 80px;
+    object-fit: cover;
+    border-radius: 50%;
+    border: 3px solid var(--primary);
+    padding: 5px;
+    background: var(--white);
+    box-shadow: 0 0 20px rgba(255, 107, 0, 0.3);
+}
+
+/* TÍTULOS */
+.auth-container h2 {
+    font-family: 'Poppins', sans-serif;
+    font-size: 28px;
+    font-weight: 700;
+    margin-bottom: 5px;
+}
+
+.auth-container p.subtitle {
+    color: rgba(255,255,255,0.6);
+    font-size: 14px;
+    margin-bottom: 25px;
+}
+
+/* MENSAGENS DO DJANGO */
+.messages { 
+    list-style: none; 
+    margin-bottom: 20px; 
+}
+
+.message {
+    padding: 12px;
+    border-radius: 12px;
+    font-size: 13px;
+    margin-bottom: 10px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    background: rgba(255, 59, 48, 0.15);
+    color: #ff453a;
+    border: 1px solid rgba(255, 59, 48, 0.2);
+}
+
+/* ============================================================ */
+/* SEÇÃO ESPECÍFICA PARA CADASTRO - INPUTS VISÍVEIS */
+/* ============================================================ */
+
+/* Comentário: Grupos de formulário com espaçamento */
+.form-group {
+    text-align: left;
+    margin-bottom: 15px;
+    position: relative;
+}
+
+/* Comentário: Labels com estilo profissional */
+.form-group label {
+    display: block !important;
+    color: rgba(255,255,255,0.9) !important;
+    font-size: 12px !important;
+    font-weight: 600 !important;
+    margin-bottom: 8px !important;
+    margin-left: 5px !important;
+    text-transform: uppercase !important;
+    letter-spacing: 0.5px !important;
+}
+
+/* Comentário: INPUTS CORRIGIDOS - Fundo opaco e texto visível com classe .form-input */
+.form-input,
+.auth-form input[type="text"],
+.auth-form input[type="email"],
+.auth-form input[type="password"],
+.form-group input[type="text"],
+.form-group input[type="email"],
+.form-group input[type="password"] {
+    width: 100% !important;
+    /* Comentário: Fundo branco semi-transparente para máxima visibilidade */
+    background: rgba(255, 255, 255, 0.25) !important;
+    border: 2px solid rgba(255, 255, 255, 0.35) !important;
+    padding: 12px 16px !important;
+    border-radius: 12px !important;
+    color: var(--white) !important;
+    font-size: 14px !important;
+    outline: none !important;
+    transition: var(--transition) !important;
+    box-sizing: border-box !important;
+    font-family: 'Inter', sans-serif !important;
+    display: block !important;
+    visibility: visible !important;
+}
+
+/* Comentário: Placeholder com cor visível */
+.form-input::placeholder,
+.auth-form input::placeholder,
+.form-group input::placeholder {
+    color: rgba(255, 255, 255, 0.65) !important;
+}
+
+/* Comentário: Estado de foco dos inputs */
+.form-input:focus,
+.auth-form input:focus,
+.form-group input:focus {
+    background: rgba(255, 255, 255, 0.35) !important;
+    border-color: var(--primary) !important;
+    box-shadow: 0 0 0 4px rgba(255, 107, 0, 0.3) !important;
+}
+
+/* Comentário: Estilo para inputs com ícones (Login) */
+.form-group.with-icon input {
+    padding-left: 45px !important;
+}
+
+.form-group i.input-icon {
+    position: absolute;
+    left: 15px;
+    top: 38px;
+    color: rgba(255,255,255,0.4);
+    transition: var(--transition);
+}
+
+.form-group input:focus + i.input-icon {
+    color: var(--primary);
+}
+
+/* Comentário: Erros de validação do Django */
+.errorlist {
+    list-style: none !important;
+    color: #ff453a !important;
+    font-size: 11px !important;
+    margin-top: 5px !important;
+    margin-left: 5px !important;
+}
+
+.errorlist li {
+    margin-bottom: 5px !important;
+}
+
+/* ============================================================ */
+/* BOTÃO DE SUBMISSÃO */
+/* ============================================================ */
+
+.btn-submit {
+    width: 100%;
+    padding: 14px;
+    margin-top: 15px;
+    background: linear-gradient(45deg, var(--primary), var(--primary-dark));
+    color: var(--white);
+    border: none;
+    border-radius: 12px;
+    font-size: 16px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: var(--transition);
+    box-shadow: 0 8px 20px rgba(255, 107, 0, 0.2);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+}
+
+.btn-submit:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 12px 25px rgba(255, 107, 0, 0.4);
+    filter: brightness(1.1);
+}
+
+.btn-submit:active { 
+    transform: translateY(0); 
+}
+
+/* ============================================================ */
+/* FOOTER LINKS */
+/* ============================================================ */
+
+.auth-footer {
+    margin-top: 25px;
+    font-size: 14px;
+    color: rgba(255, 255, 255, 0.5);
+}
+
+.auth-footer a {
+    color: var(--primary);
+    text-decoration: none;
+    font-weight: 700;
+    transition: var(--transition);
+}
+
+.auth-footer a:hover { 
+    color: var(--white); 
+}
+
+/* ============================================================ */
+/* RESPONSIVIDADE */
+/* ============================================================ */
+ 
+@media (max-width: 480px) {
+    .auth-container { 
+        padding: 30px 20px; 
+    }
+    
+    .back-home { 
+        top: 20px; 
+        left: 20px; 
+    }
+}

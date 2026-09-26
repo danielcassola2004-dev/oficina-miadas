@@ -1,0 +1,257 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+    <!-- META TAGS -->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Oficina Miadas - Admin{% endblock %}</title>
+    
+    <!-- GOOGLE FONTS -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Poppins:wght@600;700;800&display=swap" rel="stylesheet">
+    
+    <!-- FONT AWESOME ÍCONES -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- CSS BASE ADMIN -->
+    <link rel="stylesheet" href="{% static 'css/base_admin.css' %}">
+    {% block extra_css %}{% endblock %}
+</head>
+<body>
+
+<!-- ========== BARRA LATERAL (SIDEBAR) ========== -->
+<aside class="barra-lateral" id="barra-lateral">
+    <!-- CABEÇALHO DA BARRA LATERAL -->
+    <div class="cabecalho-barra-lateral">
+        <!-- LOGO -->
+        <div class="container-logo">
+            <img src="{% static 'images/logo.png' %}" alt="Logo">
+            <div class="texto-logo">
+                <h1>Oficina</h1>
+                <p>Miadas</p>
+            </div>
+        </div>
+        <!-- BOTÃO TOGGLE BARRA LATERAL -->
+        <button class="botao-toggle-barra" id="botao-toggle-barra">
+            <i class="fas fa-bars"></i>
+        </button>
+    </div>
+
+    <!-- PERFIL DO UTILIZADOR -->
+    <div class="perfil-barra-lateral">
+        <!-- AVATAR -->
+        <div class="avatar-perfil">
+             <img src="{% static 'images/foto_passe.png' %}" alt="Logo">
+        </div>
+        <!-- INFORMAÇÕES DO PERFIL -->
+        <div class="info-perfil">
+            <h3>{{ user.first_name|default:user.username }}</h3>
+            <p>Administrador</p>
+            
+        </div>
+    </div>
+
+    <!-- NAVEGAÇÃO -->
+    <nav class="navegacao-barra-lateral">
+        <ul>
+            <!-- DASHBOARD -->
+            <li>
+                <a href="{% url 'painel_admin' %}" class="link-nav {% if request.resolver_match.url_name == 'painel_admin' %}ativo{% endif %}">
+                    <i class="fas fa-chart-line"></i>
+                    <span>Dashboard</span>
+                </a>
+            </li>
+            
+            <!-- AGENDAMENTOS -->
+            <li>
+                <a href="{% url 'admin_agendamentos' %}" class="link-nav {% if request.resolver_match.url_name == 'admin_agendamentos' %}ativo{% endif %}">
+                    <i class="fas fa-calendar-check"></i>
+                    <span>Agendamentos</span>
+                </a>
+            </li>
+            
+            <!-- CLIENTES -->
+            <li>
+                <a href="{% url 'clientes' %}" class="link-nav {% if request.resolver_match.url_name == 'clientes' %}ativo{% endif %}">
+                    <i class="fas fa-users"></i>
+                    <span>Clientes</span>
+                </a>
+            </li>
+            
+            <!-- SEÇÃO: GESTÃO -->
+            <li class="secao-nav">
+                <span class="titulo-secao-nav">Gestão</span>
+            </li>
+            
+            <!-- SERVIÇOS -->
+            <li>
+                <a href="{% url 'admin_servicos' %}" class="link-nav {% if request.resolver_match.url_name == 'admin_servicos' %}ativo{% endif %}">
+                    <i class="fas fa-tools"></i>
+                    <span>Serviços</span>
+                </a>
+            </li>
+            
+            <!-- PUBLICIDADES -->
+            <li>
+                <a href="{% url 'admin_publicidades' %}" class="link-nav {% if request.resolver_match.url_name == 'admin_publicidades' %}ativo{% endif %}">
+                    <i class="fas fa-bullhorn"></i>
+                    <span>Publicidades</span>
+                </a>
+            </li>
+            
+            <!-- RELATÓRIOS -->
+            <li>
+                <a href="{% url 'admin_relatorio' %}" class="link-nav {% if request.resolver_match.url_name == 'admin_relatorio' %}ativo{% endif %}">
+                    <i class="fas fa-chart-bar"></i>
+                    <span>Relatórios</span>
+                </a>
+            </li>
+
+            <!-- CHAT -->
+            <li>
+                <a href="{% url 'chat_admin' %}" class="link-nav {% if request.resolver_match.url_name == 'chat_admin' %}ativo{% endif %}">
+                    <i class="fas fa-comments"></i>
+                    <span>Chat</span>
+                </a>
+            </li>
+            
+            
+            <!-- SEÇÃO: CONTA -->
+            <li class="secao-nav">
+                <span class="titulo-secao-nav">Conta</span>
+            </li>
+            
+            <!-- MEU PERFIL -->
+            <li>
+                <a href="{% url 'admin_perfil' %}" class="link-nav {% if request.resolver_match.url_name == 'admin_perfil' %}ativo{% endif %}">
+                    <i class="fas fa-user-circle"></i>
+                    <span>Meu Perfil</span>
+                </a>
+            </li>
+            
+            <!-- SAIR -->
+            <li>
+                <a href="{% url 'logout' %}" class="link-nav sair">
+                    <i class="fas fa-sign-out-alt"></i>
+                    <span>Sair</span>
+                </a>
+            </li>
+        </ul>
+    </nav>
+</aside>
+
+<!-- ========== CONTEÚDO PRINCIPAL ========== -->
+<main class="conteudo-principal">
+    <!-- BARRA SUPERIOR (TOPBAR) -->
+    <header class="barra-superior">
+        <!-- LADO ESQUERDO DA BARRA SUPERIOR -->
+        <div class="barra-superior-esquerda">
+            <!-- BOTÃO MENU TOGGLE -->
+            <button class="botao-menu-toggle" id="botao-menu-toggle">
+                <i class="fas fa-bars"></i>
+            </button>
+            <!-- CAIXA DE PESQUISA -->
+            <div class="caixa-pesquisa">
+                <i class="fas fa-search"></i>
+                <input type="text" placeholder="Pesquisar...">
+            </div>
+        </div>
+
+        <!-- LADO DIREITO DA BARRA SUPERIOR -->
+        <div class="barra-superior-direita">
+            <!-- BOTÃO ALTERNAR TEMA (ESCURO/CLARO) -->
+            <button class="botao-alternar-tema" id="botao-alternar-tema" title="Alternar tema">
+                <i class="fas fa-moon"></i>
+            </button>
+
+            <!-- CONTAINER NOTIFICAÇÕES -->
+            <div class="container-notificacoes">
+                <!-- BOTÃO NOTIFICAÇÕES -->
+                <button class="botao-notificacoes" id="botao-notificacoes">
+                    <i class="fas fa-bell"></i>
+                    <!-- BADGE CONTADOR NOTIFICAÇÕES -->
+                    <span class="badge-notificacoes" id="badge-notificacoes">0</span>
+                </button>
+                <!-- DROPDOWN NOTIFICAÇÕES -->
+                <div class="dropdown-notificacoes" id="dropdown-notificacoes" style="display: none;">
+                    <!-- CABEÇALHO DROPDOWN -->
+                    <div class="cabecalho-dropdown">
+                        <h3>Notificações</h3>
+                        <button class="botao-fechar" id="botao-fechar-notificacoes">×</button>
+                    </div>
+                    <!-- LISTA NOTIFICAÇÕES -->
+                    <div class="lista-notificacoes" id="lista-notificacoes">
+                        <p class="mensagem-vazia">Nenhuma notificação</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- CONTAINER EMAILS -->
+            <div class="container-emails">
+                <!-- BOTÃO EMAILS -->
+                <button class="botao-emails" id="botao-emails">
+                    <i class="fas fa-envelope"></i>
+                    <!-- BADGE CONTADOR EMAILS -->
+                    <span class="badge-emails" id="badge-emails">0</span>
+                </button>
+                <!-- DROPDOWN EMAILS -->
+                <div class="dropdown-emails" id="dropdown-emails" style="display: none;">
+                    <!-- CABEÇALHO DROPDOWN -->
+                    <div class="cabecalho-dropdown">
+                        <h3>Emails</h3>
+                        <button class="botao-fechar" id="botao-fechar-emails">×</button>
+                    </div>
+                    <!-- LISTA EMAILS -->
+                    <div class="lista-emails" id="lista-emails">
+                        <p class="mensagem-vazia">Nenhum email</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- MENU UTILIZADOR -->
+            <div class="menu-utilizador">
+                <!-- BOTÃO MENU UTILIZADOR -->
+                <button class="botao-utilizador" id="botao-utilizador">
+                    <!-- AVATAR UTILIZADOR -->
+                    <div class="avatar-utilizador">
+                        {{ user.first_name|first|upper }}{{ user.last_name|first|upper }}
+                    </div>
+                </button>
+                <!-- DROPDOWN MENU UTILIZADOR -->
+                <div class="dropdown-utilizador" id="dropdown-utilizador" style="display: none;">
+                    <!-- LINK MEU PERFIL -->
+                    <a href="{% url 'admin_perfil' %}" class="item-dropdown">
+                        <i class="fas fa-user"></i> Meu Perfil
+                    </a>
+                    <!-- LINK SAIR -->
+                    <a href="{% url 'logout' %}" class="item-dropdown sair">
+                        <i class="fas fa-sign-out-alt"></i> Sair
+                    </a>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- CONTEÚDO -->
+    <div class="conteudo">
+        <!-- MENSAGENS DE ALERTA -->
+        {% if messages %}
+            {% for message in messages %}
+                <div class="alerta alerta-{{ message.tags }}">
+                    {{ message }}
+                    <button class="botao-fechar-alerta">&times;</button>
+                </div>
+            {% endfor %}
+        {% endif %}
+
+        <!-- BLOCO DE CONTEÚDO -->
+        {% block content %}{% endblock %}
+    </div>
+</main>
+
+<!-- SCRIPTS -->
+<script src="{% static 'js/admin_base.js' %}"></script>
+{% block extra_js %}{% endblock %}
+
+</body>
+</html>

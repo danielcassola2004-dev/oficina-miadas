@@ -1,0 +1,677 @@
+/* ============================================================ */
+/* ARQUIVO: base_home.css */
+/* DESCRIÇÃO: Estilos para a base do cliente */
+/* IDIOMA: Português */
+/* ============================================================ */
+
+/* ============================================================ */
+/* SEÇÃO 1: VARIÁVEIS CSS E CORES */
+/* ============================================================ */
+
+:root {
+    /* Cores Primárias */
+    --cor-primaria: #ff6b00;
+    --cor-primaria-escura: #e55a00;
+    --cor-primaria-clara: #ffb84d;
+    
+    /* Cores Neutras - Tema Claro */
+    --fundo-claro: #ffffff;
+    --fundo-secundario-claro: #f8f9fa;
+    --texto-claro: #1a1a1a;
+    --texto-secundario-claro: #666666;
+    --borda-claro: #e0e0e0;
+    
+    /* Cores Neutras - Tema Escuro */
+    --fundo-escuro: #1a1a1a;
+    --fundo-secundario-escuro: #2d2d2d;
+    --texto-escuro: #ffffff;
+    --texto-secundario-escuro: #b0b0b0;
+    --borda-escuro: #404040;
+    
+    /* Cores de Status */
+    --cor-sucesso: #28a745;
+    --cor-erro: #dc3545;
+    --cor-aviso: #ffc107;
+    --cor-info: #17a2b8;
+    
+    /* Espaçamentos */
+    --espacamento-xs: 0.25rem;
+    --espacamento-sm: 0.5rem;
+    --espacamento-md: 1rem;
+    --espacamento-lg: 1.5rem;
+    --espacamento-xl: 2rem;
+    --espacamento-xxl: 3rem;
+    
+    /* Tamanhos */
+    --largura-sidebar: 280px;
+    --altura-cabecalho: 70px;
+    
+    /* Transições */
+    --transicao-rapida: 0.2s ease-in-out;
+    --transicao-normal: 0.3s ease-in-out;
+    --transicao-lenta: 0.5s ease-in-out;
+    
+    /* Sombras */
+    --sombra-leve: 0 2px 8px rgba(0, 0, 0, 0.1);
+    --sombra-media: 0 4px 16px rgba(0, 0, 0, 0.15);
+    --sombra-forte: 0 8px 24px rgba(0, 0, 0, 0.2);
+}
+
+/* ============================================================ */
+/* SEÇÃO 2: TEMA CLARO (PADRÃO) */
+/* ============================================================ */
+
+body {
+    --fundo: var(--fundo-claro);
+    --fundo-secundario: var(--fundo-secundario-claro);
+    --texto: var(--texto-claro);
+    --texto-secundario: var(--texto-secundario-claro);
+    --borda: var(--borda-claro);
+}
+
+/* ============================================================ */
+/* SEÇÃO 3: TEMA ESCURO */
+/* ============================================================ */
+
+body.tema-escuro {
+    --fundo: var(--fundo-escuro);
+    --fundo-secundario: var(--fundo-secundario-escuro);
+    --texto: var(--texto-escuro);
+    --texto-secundario: var(--texto-secundario-escuro);
+    --borda: var(--borda-escuro);
+}
+
+/* ============================================================ */
+/* SEÇÃO 4: ESTILOS GLOBAIS */
+/* ============================================================ */
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    font-family: 'Poppins', sans-serif;
+    background-color: var(--fundo);
+    color: var(--texto);
+    transition: background-color var(--transicao-normal), color var(--transicao-normal);
+    line-height: 1.6;
+}
+
+/* Scrollbar Personalizada */
+::-webkit-scrollbar {
+    width: 10px;
+}
+
+::-webkit-scrollbar-track {
+    background: var(--fundo-secundario);
+}
+
+::-webkit-scrollbar-thumb {
+    background: var(--cor-primaria);
+    border-radius: 5px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: var(--cor-primaria-escura);
+}
+
+/* ============================================================ */
+/* SEÇÃO 5: LAYOUT PRINCIPAL */
+/* ============================================================ */
+
+.barra-lateral {
+    position: fixed;
+    left: 0;
+    top: 0;
+    width: var(--largura-sidebar);
+    height: 100vh;
+    background-color: var(--fundo-secundario);
+    border-right: 1px solid var(--borda);
+    overflow-y: auto;
+    z-index: 1000;
+    display: flex;
+    flex-direction: column;
+    transition: transform var(--transicao-normal);
+}
+
+.wrapper-principal {
+    margin-left: var(--largura-sidebar);
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+.cabecalho {
+    height: var(--altura-cabecalho);
+    background-color: var(--fundo);
+    border-bottom: 1px solid var(--borda);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 var(--espacamento-xl);
+    box-shadow: var(--sombra-leve);
+    position: sticky;
+    top: 0;
+    z-index: 100;
+}
+
+.conteudo-principal {
+    flex: 1;
+    padding: var(--espacamento-xl);
+    background-color: var(--fundo);
+}
+
+.rodape {
+    background-color: var(--fundo-secundario);
+    border-top: 1px solid var(--borda);
+    padding: var(--espacamento-lg);
+    text-align: center;
+    color: var(--texto-secundario);
+    font-size: 0.9rem;
+}
+
+/* ============================================================ */
+/* SEÇÃO 6: SIDEBAR - CABEÇALHO */
+/* ============================================================ */
+
+.barra-lateral-cabecalho {
+    padding: var(--espacamento-lg);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid var(--borda);
+}
+
+.logo-container {
+    display: flex;
+    align-items: center;
+    gap: var(--espacamento-md);
+    flex: 1;
+}
+
+.logo-container img {
+    width: 60px;
+    height: 60px;
+    object-fit: cover;
+    border-radius: 50%;
+    border: 3px solid orange ;
+    padding: 5px;
+    background:white;
+    box-shadow: 0 0 20px rgba(255, 107, 0, 0.3);
+}
+
+/* TÍTULOS */
+.auth-container h2 {
+    font-family: 'Poppins', sans-serif;
+    font-size: 28px;
+    font-weight: 700;
+    margin-bottom: 5px;
+}
+
+.logo-texto {
+    display: flex;
+    flex-direction: column;
+}
+
+.logo-texto h2 {
+    font-size: 1.2rem;
+    font-weight: 700;
+    color: var(--texto);
+    margin: 0;
+}
+
+.logo-texto p {
+    font-size: 0.75rem;
+    color: var(--cor-primaria);
+    font-weight: 600;
+    margin: 0;
+}
+
+.botao-fechar-sidebar {
+    display: none;
+    background: none;
+    border: none;
+    font-size: 1.5rem;
+    cursor: pointer;
+    color: var(--texto);
+    transition: color var(--transicao-rapida);
+}
+
+.botao-fechar-sidebar:hover {
+    color: var(--cor-primaria);
+}
+
+/* ============================================================ */
+/* SEÇÃO 7: SIDEBAR - MENU */
+/* ============================================================ */
+
+.menu-lateral {
+    flex: 1;
+    padding: var(--espacamento-lg) 0;
+    display: flex;
+    flex-direction: column;
+    gap: var(--espacamento-sm);
+}
+
+.item-menu {
+    display: flex;
+    align-items: center;
+    gap: var(--espacamento-md);
+    padding: var(--espacamento-md) var(--espacamento-lg);
+    color: var(--texto-secundario);
+    text-decoration: none;
+    transition: all var(--transicao-rapida);
+    position: relative;
+    font-weight: 500;
+}
+
+.item-menu:hover {
+    color: var(--cor-primaria);
+    background-color: rgba(255, 107, 0, 0.05);
+}
+
+.item-menu.ativo {
+    color: var(--cor-primaria);
+    background-color: rgba(255, 107, 0, 0.1);
+}
+
+.icone-menu {
+    width: 24px;
+    height: 24px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.1rem;
+}
+
+.texto-menu {
+    flex: 1;
+}
+
+.indicador-ativo {
+    width: 3px;
+    height: 0;
+    background-color: var(--cor-primaria);
+    border-radius: 3px;
+    transition: height var(--transicao-rapida);
+}
+
+.item-menu.ativo .indicador-ativo {
+    height: 24px;
+}
+
+.badge-notificacoes {
+    background-color: var(--cor-erro);
+    color: white;
+    border-radius: 50%;
+    width: 24px;
+    height: 24px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.75rem;
+    font-weight: 700;
+}
+
+/* ============================================================ */
+/* SEÇÃO 8: SIDEBAR - DIVISOR */
+/* ============================================================ */
+
+.divisor-sidebar {
+    height: 1px;
+    background-color: var(--borda);
+    margin: var(--espacamento-md) 0;
+}
+
+/* ============================================================ */
+/* SEÇÃO 9: SIDEBAR - SEÇÃO DO UTILIZADOR */
+/* ============================================================ */
+
+.secao-utilizador {
+    padding: var(--espacamento-lg);
+    display: flex;
+    align-items: center;
+    gap: var(--espacamento-md);
+    border-bottom: 1px solid var(--borda);
+}
+
+.avatar-utilizador {
+    width: 50px;
+    height: 50px;
+    background: linear-gradient(135deg, var(--cor-primaria), var(--cor-primaria-clara));
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    font-weight: 700;
+    font-size: 1.2rem;
+    flex-shrink: 0;
+}
+
+.info-utilizador {
+    flex: 1;
+    min-width: 0;
+}
+
+.nome-utilizador {
+    font-weight: 600;
+    color: var(--texto);
+    margin: 0;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.email-utilizador {
+    font-size: 0.85rem;
+    color: var(--texto-secundario);
+    margin: 0;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+/* ============================================================ */
+/* SEÇÃO 10: SIDEBAR - MENU RODAPÉ */
+/* ============================================================ */
+
+.menu-rodape {
+    padding: var(--espacamento-lg) 0;
+    display: flex;
+    flex-direction: column;
+    gap: var(--espacamento-sm);
+}
+
+.item-menu-rodape {
+    display: flex;
+    align-items: center;
+    gap: var(--espacamento-md);
+    padding: var(--espacamento-md) var(--espacamento-lg);
+    color: var(--texto-secundario);
+    text-decoration: none;
+    transition: all var(--transicao-rapida);
+    font-weight: 500;
+}
+
+.item-menu-rodape:hover {
+    color: var(--cor-primaria);
+    background-color: rgba(255, 107, 0, 0.05);
+}
+
+.item-menu-rodape.sair:hover {
+    color: var(--cor-erro);
+    background-color: rgba(220, 53, 69, 0.05);
+}
+
+/* ============================================================ */
+/* SEÇÃO 11: CABECALHO */
+/* ============================================================ */
+
+.cabecalho-esquerda {
+    display: flex;
+    align-items: center;
+    gap: var(--espacamento-lg);
+}
+
+.botao-toggle-sidebar {
+    display: none;
+    background: none;
+    border: none;
+    font-size: 1.5rem;
+    cursor: pointer;
+    color: var(--texto);
+    transition: color var(--transicao-rapida);
+}
+
+.botao-toggle-sidebar:hover {
+    color: var(--cor-primaria);
+}
+
+.titulo-pagina {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: var(--texto);
+    margin: 0;
+}
+
+.cabecalho-direita {
+    display: flex;
+    align-items: center;
+    gap: var(--espacamento-lg);
+}
+
+.busca-cabecalho {
+    display: flex;
+    align-items: center;
+    gap: var(--espacamento-sm);
+    background-color: var(--fundo-secundario);
+    padding: var(--espacamento-sm) var(--espacamento-md);
+    border-radius: 8px;
+    border: 1px solid var(--borda);
+    transition: all var(--transicao-rapida);
+}
+
+.busca-cabecalho:focus-within {
+    border-color: var(--cor-primaria);
+    box-shadow: 0 0 0 3px rgba(255, 107, 0, 0.1);
+}
+
+.input-busca {
+    background: none;
+    border: none;
+    outline: none;
+    color: var(--texto);
+    width: 200px;
+    font-family: 'Poppins', sans-serif;
+}
+
+.input-busca::placeholder {
+    color: var(--texto-secundario);
+}
+
+.botao-tema {
+    width: 40px;
+    height: 40px;
+    background-color: var(--fundo-secundario);
+    border: 1px solid var(--borda);
+    border-radius: 8px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--texto);
+    transition: all var(--transicao-rapida);
+    font-size: 1.1rem;
+}
+
+.botao-tema:hover {
+    background-color: var(--cor-primaria);
+    color: white;
+    border-color: var(--cor-primaria);
+}
+
+/* ============================================================ */
+/* SEÇÃO 12: MENSAGENS E ALERTAS */
+/* ============================================================ */
+
+.container-mensagens {
+    padding: var(--espacamento-lg);
+    display: flex;
+    flex-direction: column;
+    gap: var(--espacamento-md);
+}
+
+.alerta {
+    display: flex;
+    align-items: center;
+    gap: var(--espacamento-md);
+    padding: var(--espacamento-md) var(--espacamento-lg);
+    border-radius: 8px;
+    animation: slideInDown 0.3s ease-in-out;
+}
+
+.alerta-success {
+    background-color: rgba(40, 167, 69, 0.1);
+    color: var(--cor-sucesso);
+    border: 1px solid var(--cor-sucesso);
+}
+
+.alerta-error {
+    background-color: rgba(220, 53, 69, 0.1);
+    color: var(--cor-erro);
+    border: 1px solid var(--cor-erro);
+}
+
+.alerta-warning {
+    background-color: rgba(255, 193, 7, 0.1);
+    color: var(--cor-aviso);
+    border: 1px solid var(--cor-aviso);
+}
+
+.alerta-info {
+    background-color: rgba(23, 162, 184, 0.1);
+    color: var(--cor-info);
+    border: 1px solid var(--cor-info);
+}
+
+.botao-fechar-alerta {
+    background: none;
+    border: none;
+    color: inherit;
+    font-size: 1.5rem;
+    cursor: pointer;
+    margin-left: auto;
+    transition: transform var(--transicao-rapida);
+}
+
+.botao-fechar-alerta:hover {
+    transform: scale(1.2);
+}
+
+/* ============================================================ */
+/* SEÇÃO 13: OVERLAY (MOBILE) */
+/* ============================================================ */
+
+.overlay-sidebar {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    z-index: 999;
+}
+
+/* ============================================================ */
+/* SEÇÃO 14: RESPONSIVIDADE */
+/* ============================================================ */
+
+@media (max-width: 768px) {
+    /* Sidebar colapsável */
+    .barra-lateral {
+        transform: translateX(-100%);
+        width: 250px;
+    }
+    
+    .barra-lateral.ativa {
+        transform: translateX(0);
+    }
+    
+    .overlay-sidebar.ativo {
+        display: block;
+    }
+    
+    .botao-toggle-sidebar {
+        display: block;
+    }
+    
+    .botao-fechar-sidebar {
+        display: block;
+    }
+    
+    .wrapper-principal {
+        margin-left: 0;
+    }
+    
+    .cabecalho {
+        padding: 0 var(--espacamento-md);
+    }
+    
+    .conteudo-principal {
+        padding: var(--espacamento-md);
+    }
+    
+    .busca-cabecalho {
+        display: none;
+    }
+    
+    .titulo-pagina {
+        font-size: 1.2rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .barra-lateral {
+        width: 100%;
+    }
+    
+    .titulo-pagina {
+        font-size: 1rem;
+    }
+    
+    .cabecalho {
+        height: 60px;
+        padding: 0 var(--espacamento-md);
+    }
+    
+    .conteudo-principal {
+        padding: var(--espacamento-md);
+    }
+}
+
+/* ============================================================ */
+/* SEÇÃO 15: ANIMAÇÕES */
+/* ============================================================ */
+
+@keyframes slideInDown {
+    from {
+        opacity: 0;
+        transform: translateY(-20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes slideInLeft {
+    from {
+        opacity: 0;
+        transform: translateX(-20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
+/* ============================================================ */
+/* FIM DO ARQUIVO */
+/* ============================================================ */

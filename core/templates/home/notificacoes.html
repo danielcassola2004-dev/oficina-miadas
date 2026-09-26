@@ -1,0 +1,61 @@
+{% extends 'home/base_cliente.html' %}
+{% load static %}
+
+{% block title %}Notificações - Oficina Miadas{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/notificacoes.css' %}">
+{% endblock %}
+
+{% block content %}
+<div class="notificacoes-wrapper">
+    <!-- HEADER -->
+    <div class="page-header">
+        <h1><i class="fas fa-bell"></i> Notificações</h1>
+        <div class="header-actions">
+            <span class="unread-count" id="unreadCount">0</span>
+            <button class="btn btn-small" id="markAllRead">
+                <i class="fas fa-check-double"></i> Marcar Tudo como Lido
+            </button>
+        </div>
+    </div>
+
+    <!-- NOTIFICAÇÕES LIST -->
+    {% if notificacoes %}
+    <div class="notificacoes-list">
+        {% for notif in notificacoes %}
+        <div class="notificacao-item {% if not notif.lida %}unread{% endif %}" data-id="{{ notif.id }}">
+            <div class="notif-icon">
+                <i class="fas fa-bell"></i>
+            </div>
+            <div class="notif-content">
+                <h4>{{ notif.titulo }}</h4>
+                <p>{{ notif.mensagem }}</p>
+                <small class="notif-date">{{ notif.criada_em|date:"d/m/Y H:i" }}</small>
+            </div>
+            <div class="notif-actions">
+                {% if not notif.lida %}
+                <button class="btn-icon mark-read" data-id="{{ notif.id }}">
+                    <i class="fas fa-check"></i>
+                </button>
+                {% endif %}
+                <button class="btn-icon delete-notif" data-id="{{ notif.id }}">
+                    <i class="fas fa-trash"></i>
+                </button>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+    {% else %}
+    <div class="empty-state">
+        <i class="fas fa-inbox"></i>
+        <h3>Nenhuma notificação</h3>
+        <p>Você está em dia com todas as notificações</p>
+    </div>
+    {% endif %}
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script src="{% static 'js/notificacoes.js' %}"></script>
+{% endblock %}

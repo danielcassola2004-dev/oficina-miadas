@@ -19,7 +19,7 @@
         {% for servico in servicos %}
         <div class="servico-card">
             <div class="servico-icon">
-                  <img src="{{ servico.imagem.url }}" alt="{{ servico.nome }}">
+                 <img src="{% static servico.imagem.name %}" alt="{{ servico.nome }}">
             </div>
             <h3>{{ servico.nome }}</h3>
             <p>{{ servico.descricao|truncatewords:20 }}</p>
